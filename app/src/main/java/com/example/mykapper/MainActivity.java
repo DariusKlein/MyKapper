@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity
     private FirebaseAuth mAuth;
     static boolean loggedIn = false;
 
-
+ lol test
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
