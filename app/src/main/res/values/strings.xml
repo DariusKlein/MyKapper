@@ -1,0 +1,35 @@
+<resources>
+    <string name="app_name">MyKapper</string>
+    <string name="title_activity_second_activity">Second_activity</string>
+    <string name="title_activity_third_activity">Third_activity</string>
+    <string name="title_activity_settings">Settings</string>
+
+    <!-- Preference Titles -->
+    <string name="messages_header">Messages</string>
+    <string name="sync_header">Sync</string>
+
+    <!-- Messages Preferences -->
+    <string name="signature_title">Your signature</string>
+    <string name="reply_title">Default reply action</string>
+
+    <!-- Sync Preferences -->
+    <string name="sync_title">Sync email periodically</string>
+    <string name="attachment_title">Download incoming attachments</string>
+    <string name="attachment_summary_on">Automatically download attachments for incoming emails
+    </string>
+    <string name="attachment_summary_off">Only download attachments when manually requested</string>
+    <string name="title_activity_kapper_1">Kapper_1</string>
+    <string name="tab_text_1">Afspraken</string>
+    <string name="tab_text_2">Geschiedenis</string>
+    <string name="tab_text_3">Favoriet</string>
+    <string name="tab_text_4">info</string>
+    <string name="tab_text_5">reserveren</string>
+    <string name="tab_text_6">info</string>
+    <string name="title_activity_my_kappr">MyKappr</string>
+    <string name="title_activity_mijn_kappr">MijnKappr</string>
+    <string name="title_activity_kapsalon_algemeen">kapsalon algemeen</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_database_test">database_test</string>
+    <string name="title_activity_mijn__kappr_login">Mijn_Kappr_login</string>
+</resources>

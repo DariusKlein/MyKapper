@@ -1,0 +1,50 @@
+<html>
+<head>
+<title>build.gradle</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #000000;}
+.s1 { color: #008000; font-weight: bold;}
+.s2 { color: #0000ff;}
+.s3 { color: #000043; font-weight: bold;}
+</style>
+</head>
+<body bgcolor="#ffffff">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#c0c0c0" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+build.gradle</font>
+</center></td></tr></table>
+<pre>apply plugin: <span class="s1">'com.android.application'</span>
+
+android {
+    compileSdkVersion <span class="s2">29</span>
+    buildToolsVersion <span class="s1">'29.0.2'</span>
+    defaultConfig {
+        applicationId <span class="s1">&quot;com.example.mykapper&quot;</span>
+        minSdkVersion <span class="s2">21</span>
+        targetSdkVersion <span class="s2">29</span>
+        versionCode <span class="s2">1</span>
+        versionName <span class="s1">&quot;1.0&quot;</span>
+        testInstrumentationRunner <span class="s1">&quot;androidx.test.runner.AndroidJUnitRunner&quot;</span>
+    }
+    buildTypes {
+        release {
+            minifyEnabled <span class="s3">false</span>
+            proguardFiles getDefaultProguardFile(<span class="s1">'proguard-android-optimize.txt'</span>), <span class="s1">'proguard-rules.pro'</span>
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: <span class="s1">'libs'</span>, include: [<span class="s1">'*.jar'</span>])
+    implementation <span class="s1">'androidx.appcompat:appcompat:1.0.2'</span>
+    implementation <span class="s1">'androidx.constraintlayout:constraintlayout:1.1.3'</span>
+    implementation <span class="s1">'com.google.android.material:material:1.0.0'</span>
+    testImplementation <span class="s1">'junit:junit:4.12'</span>
+    androidTestImplementation <span class="s1">'androidx.test.ext:junit:1.1.0'</span>
+    androidTestImplementation <span class="s1">'androidx.test.espresso:espresso-core:3.1.1'</span>
+}
+</pre>
+</body>
+</html>
