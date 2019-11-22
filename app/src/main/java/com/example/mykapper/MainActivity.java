@@ -3,6 +3,7 @@ package com.example.mykapper;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import android.content.Intent;
@@ -12,6 +13,8 @@ import android.widget.EditText;
 import android.widget.RatingBar.OnRatingBarChangeListener;
 import android.widget.RatingBar;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -25,6 +28,9 @@ public class MainActivity extends AppCompatActivity
     static float Rating;
     private FirebaseAuth mAuth;
     static boolean loggedIn = false;
+
+    String preferences_name = "isFirstTime";
+
 
 
 
@@ -41,8 +47,26 @@ public class MainActivity extends AppCompatActivity
         SettingButton.setOnClickListener(this);
         Button.setOnClickListener(this);
         My_MyKappr.setOnClickListener(this);
+
+        mAuth = FirebaseAuth.getInstance();
+
+
+        firstTime();
         }
 
+
+
+    public  void  firstTime(){
+
+        SharedPreferences sharedTime = getSharedPreferences(preferences_name,0);
+        if (sharedTime.getBoolean("firstTime",true))
+        {
+
+            sharedTime.edit().putBoolean("firstTime",false).apply();
+        }
+        else FirebaseAuth.getInstance().signOut();
+
+    }
 
     @Override
     public void onStart() {

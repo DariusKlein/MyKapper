@@ -15,10 +15,18 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 
+import androidx.appcompat.widget.Toolbar;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Random;
+
+
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -182,7 +190,7 @@ public class Mijn_Kappr_Register extends AppCompatActivity implements View.OnCli
                             if(task.isSuccessful()){
                                 Toast.makeText(Mijn_Kappr_Register.this, "Successful Registration", Toast.LENGTH_SHORT).show();
                                 message.hide();
-                                OpenMijn_kappr_login();
+                                add_user_database();
                             }
                             if(!task.isSuccessful()){
                                 Toast.makeText(Mijn_Kappr_Register.this, "Failed Registration", Toast.LENGTH_SHORT).show();
@@ -199,4 +207,41 @@ public class Mijn_Kappr_Register extends AppCompatActivity implements View.OnCli
         }
 
     }
+public void add_user_database(){
+
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+    Map<String, Object> Test = new HashMap<>();
+        Test.put("Name", Naam);
+        Test.put("Email", Email);
+
+
+    //todo
+    //// TODO: 29/10/2019  generate id voor docuements (kapsalon,kapper,klant,uur,minuut,sec) in variable MyNextDocID
+    //// TODO: 29/10/2019  hier onder tijdelijke definitie
+    Random randomGenerator = new Random();
+    final String MyNextDocID = String.valueOf(randomGenerator.nextInt(999999999) + 1);
+    //// TODO: 29/10/2019
+
+    DocumentReference docRef = db.collection("Users").document(MyNextDocID);
+
+// Add a new document with a generated ID
+        docRef.set(Test);
+    //
+    //Read
+    DocumentReference docRef2 = db.collection("Users").document(MyNextDocID);
+        docRef2.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+        @Override
+        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+            if (task.isSuccessful()) {
+                DocumentSnapshot doc = task.getResult();
+                OpenMijn_kappr_login();
+
+
+            }
+        }
+
+    });
+}
+
 }
