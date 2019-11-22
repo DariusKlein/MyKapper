@@ -14,6 +14,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
@@ -78,7 +80,7 @@ public EditText databasein3;
         //// TODO: 29/10/2019  generate id voor docuements (kapsalon,kapper,klant,uur,minuut,sec) in variable MyNextDocID
         //// TODO: 29/10/2019  hier onder tijdelijke definitie
         Random randomGenerator = new Random();
-        final String MyNextDocID = String.valueOf(randomGenerator.nextInt(999999999) + 1);
+        final String MyNextDocID = (MyTestvariable1 + MyTestvariable3 +(Calendar.getInstance().get(Calendar.HOUR_OF_DAY))+(randomGenerator.nextInt(98) + 1));
         //// TODO: 29/10/2019
 
         DocumentReference docRef = db.collection("Afspraken").document(MyNextDocID);

@@ -22,6 +22,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
@@ -216,19 +218,15 @@ public void add_user_database(){
         Test.put("Email", Email);
 
 
-    //todo
-    //// TODO: 29/10/2019  generate id voor docuements (kapsalon,kapper,klant,uur,minuut,sec) in variable MyNextDocID
-    //// TODO: 29/10/2019  hier onder tijdelijke definitie
+
     Random randomGenerator = new Random();
-    final String MyNextDocID = String.valueOf(randomGenerator.nextInt(999999999) + 1);
-    //// TODO: 29/10/2019
+    final String MyNextDocID = (Email);
 
     DocumentReference docRef = db.collection("Users").document(MyNextDocID);
 
-// Add a new document with a generated ID
+
         docRef.set(Test);
-    //
-    //Read
+
     DocumentReference docRef2 = db.collection("Users").document(MyNextDocID);
         docRef2.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
         @Override
