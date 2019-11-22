@@ -21,12 +21,12 @@ public class MainActivity extends AppCompatActivity
     private Button Button;
     private Button SettingButton;
     private Button My_MyKappr;
-    private RatingBar StartRating;;
+    private RatingBar StartRating;
     static float Rating;
     private FirebaseAuth mAuth;
     static boolean loggedIn = false;
 
- lol test
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
