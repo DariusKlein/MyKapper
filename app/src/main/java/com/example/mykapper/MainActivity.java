@@ -1,12 +1,14 @@
 package com.example.mykapper;
 
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.content.Intent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RatingBar;
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -14,9 +16,11 @@ import com.google.firebase.auth.FirebaseUser;
 
 public class MainActivity extends AppCompatActivity
     implements View.OnClickListener {
+
     private Button Button;
     private Button SettingButton;
     private Button My_MyKappr;
+
     private RatingBar StartRating;
 
     private FirebaseAuth mAuth;
@@ -37,8 +41,6 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
-
         mAuth = FirebaseAuth.getInstance();
 
         Button = findViewById(R.id.Zoeken);
@@ -51,8 +53,6 @@ public class MainActivity extends AppCompatActivity
         My_MyKappr.setOnClickListener(this);
 
         mAuth = FirebaseAuth.getInstance();
-
-
 
         firstTime();
         }
@@ -76,8 +76,6 @@ public class MainActivity extends AppCompatActivity
         FirebaseUser currentUser = mAuth.getCurrentUser();
 
         System.out.print(currentUser);
-
-
     }
 
 
@@ -109,7 +107,6 @@ public class MainActivity extends AppCompatActivity
         Intent intent = new Intent(this, Functions.class);
         this.startActivity(intent);
     }
-
     }
 
 

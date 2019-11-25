@@ -1,16 +1,20 @@
 package com.example.mykapper;
 
-import android.content.Intent;
 import android.os.Bundle;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+
 import androidx.appcompat.widget.Toolbar;
+
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -28,11 +32,12 @@ public class database_test extends AppCompatActivity implements View.OnClickList
     String MyTestvariable2;
     String MyTestvariable3;
 
-private Button databasetest;
-private TextView databeseout;
-public EditText databasein1;
-public EditText databasein2;
-public EditText databasein3;
+    private Button databasetest;
+    private TextView databeseout;
+
+    public EditText databasein1;
+    public EditText databasein2;
+    public EditText databasein3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,31 +45,29 @@ public EditText databasein3;
         setContentView(R.layout.activity_database_test);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
         databasein1 = findViewById(R.id.databasein1);
         databasein2 = findViewById(R.id.databasein2);
         databasein3 = findViewById(R.id.databasein3);
+
         databasetest = findViewById(R.id.databasetest);
         databeseout = findViewById(R.id.databaseout);
+
         databasetest.setOnClickListener(this);
-
     }
-
 
     @Override
     public void onClick(View v) {
-
-
-
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
         databasein1.getText();
         databasein2.getText();
         databasein3.getText();
+
         MyTestvariable1 = String.valueOf(databasein1.getText());
         MyTestvariable2 = String.valueOf(databasein2.getText());
         MyTestvariable3 = String.valueOf(databasein3.getText());
-
 
         Map<String, Object> Test = new HashMap<>();
         Test.put("Name", MyTestvariable1);
@@ -72,15 +75,11 @@ public EditText databasein3;
         Test.put("Phone", MyTestvariable3);
 
 
-        //todo
-        //// TODO: 29/10/2019  generate id voor docuements (kapsalon,kapper,klant,uur,minuut,sec) in variable MyNextDocID
-        //// TODO: 29/10/2019  hier onder tijdelijke definitie
         Random randomGenerator = new Random();
+
         final String MyNextDocID = (MyTestvariable1 + MyTestvariable3 +(Calendar.getInstance().get(Calendar.HOUR_OF_DAY))+(randomGenerator.nextInt(98) + 1));
-        //// TODO: 29/10/2019
 
         DocumentReference docRef = db.collection("Afspraken").document(MyNextDocID);
-
 
         docRef.set(Test);
         DocumentReference docRef2 = db.collection("Afspraken").document(MyNextDocID);
@@ -91,9 +90,11 @@ public EditText databasein3;
                     DocumentSnapshot doc = task.getResult();
 
                     StringBuilder fields = new StringBuilder("");
+
                     fields.append("Name: ").append(doc.get("Name"));
                     fields.append("\nEmail: ").append(doc.get("Email"));
                     fields.append("\nPhone: ").append(doc.get("Phone"));
+
                     databeseout.setText(fields.toString());
 
 
@@ -103,4 +104,4 @@ public EditText databasein3;
         });
 }
 
-    }
+}

@@ -5,20 +5,19 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
+
 import android.widget.AdapterView;
 import android.widget.ListView;
+
+import android.view.View;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import static com.example.mykapper.MainActivity.Newpage;
 
-
 public class Second_activity extends AppCompatActivity {
     ListView list;
-
-
 
     String[] maintitle = {
             "Title 1", "Title 2",
@@ -37,8 +36,6 @@ public class Second_activity extends AppCompatActivity {
             R.drawable.download_3, R.drawable.download_4,
             R.drawable.download_5,
     };
-
-
 
 
     @Override

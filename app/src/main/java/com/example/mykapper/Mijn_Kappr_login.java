@@ -2,15 +2,16 @@ package com.example.mykapper;
 
 import android.content.Intent;
 import android.os.Bundle;
+
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
-
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,6 +19,7 @@ import androidx.appcompat.widget.Toolbar;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -29,16 +31,20 @@ import static com.example.mykapper.MainActivity.loggedIn;
 public class Mijn_Kappr_login extends AppCompatActivity implements View.OnClickListener {
 
     static boolean privacy_boolean;
+
     static String Naam;
     static String Email;
     static String Wachtwoord;
 
     private Button inloggen;
     private Button Register_pagina;
+
     private EditText Naam_input;
     private EditText Email_input;
     private EditText Wachtwoord_input;
+
     private CheckBox privacy;
+
     private FirebaseAuth mAuth;
 
 
@@ -50,14 +56,17 @@ public class Mijn_Kappr_login extends AppCompatActivity implements View.OnClickL
         setSupportActionBar(Toolbar);
 
         inloggen = findViewById(R.id.inloggen);
+        inloggen.setOnClickListener(this);
+
         Naam_input = findViewById(R.id.Naam_input);
         Email_input = findViewById(R.id.Email_input);
         Wachtwoord_input = findViewById(R.id.Wachtwoord_input);
+
         Register_pagina = findViewById(R.id.Register_pagina);
-        privacy = (CheckBox)findViewById(R.id.privicy);
-        inloggen.setOnClickListener(this);
-        privacy.setOnClickListener(this);
         Register_pagina.setOnClickListener(this);
+
+        privacy = findViewById(R.id.privicy);
+        privacy.setOnClickListener(this);
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -126,7 +135,6 @@ public class Mijn_Kappr_login extends AppCompatActivity implements View.OnClickL
 
                 Newpage = "Mijn_Kappr_Register";
                 Open_activity();
-
 
                 break;
             case R.id.privicy:

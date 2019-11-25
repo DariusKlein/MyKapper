@@ -1,9 +1,7 @@
 package com.example.mykapper;
 
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,19 +11,18 @@ import android.view.MenuItem;
 
 import androidx.viewpager.widget.ViewPager;
 
-
 import com.google.android.material.tabs.TabLayout;
 
 import static com.example.mykapper.MainActivity.Newpage;
+
 import static com.example.mykapper.R.id.Tabs1;
 import static com.example.mykapper.R.id.toolbar;
 import static com.example.mykapper.R.id.view_pager;
+
 import static com.example.mykapper.R.layout.activity_kapsalon_algemeen;
 
 
 public class Kapsalon_algemeen extends AppCompatActivity {
-
-
 
     @Override
     public boolean onCreateOptionsMenu (Menu menu) {
@@ -47,12 +44,8 @@ public class Kapsalon_algemeen extends AppCompatActivity {
 
         TabLayout tabs = findViewById(Tabs1);
         tabs.setupWithViewPager(viewPager);
-
-
-
-
-
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
@@ -80,6 +73,4 @@ public class Kapsalon_algemeen extends AppCompatActivity {
         Intent intent = new Intent(this, Functions.class);
         this.startActivity(intent);
     }
-
-
 }

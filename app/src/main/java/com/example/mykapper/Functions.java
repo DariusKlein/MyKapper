@@ -2,11 +2,8 @@ package com.example.mykapper;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-
 import android.content.Intent;
 import android.os.Bundle;
-
-
 
 import static com.example.mykapper.MainActivity.Newpage;
 

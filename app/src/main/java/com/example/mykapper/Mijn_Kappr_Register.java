@@ -4,25 +4,32 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
+
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -32,35 +39,44 @@ import static com.example.mykapper.MainActivity.Newpage;
 public class Mijn_Kappr_Register extends AppCompatActivity implements View.OnClickListener {
 
     static boolean privacy_boolean;
+
     static String Naam;
     static String Email;
     static String Wachtwoord;
 
     private Button Register;
+
     private EditText Naam_input;
     private EditText Email_input;
     private EditText Wachtwoord_input;
+
     private CheckBox privacy;
+
     private FirebaseAuth mAuth;
+
     private String verify;
+
     private ProgressDialog message;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mijn__kappr_register);
-        Toolbar Toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar Toolbar =  findViewById(R.id.toolbar);
         setSupportActionBar(Toolbar);
 
         Register = findViewById(R.id.Register);
+        Register.setOnClickListener(this);
+
+        privacy = findViewById(R.id.privicy);
+        privacy.setOnClickListener(this);
+
         Naam_input = findViewById(R.id.Naam_input);
         Email_input = findViewById(R.id.Email_input);
         Wachtwoord_input = findViewById(R.id.Wachtwoord_input);
-        privacy = (CheckBox)findViewById(R.id.privicy);
-        Register.setOnClickListener(this);
-        privacy.setOnClickListener(this);
 
         message = new ProgressDialog(this);
+
         mAuth = FirebaseAuth.getInstance();
 
     }
@@ -98,10 +114,6 @@ public class Mijn_Kappr_Register extends AppCompatActivity implements View.OnCli
         return super.onOptionsItemSelected(item);
     }
 
-
-
-
-
     @Override
     public void onClick(View v)
     {
@@ -113,7 +125,6 @@ public class Mijn_Kappr_Register extends AppCompatActivity implements View.OnCli
             case R.id.Register:
                 userRegister();
 
-
                 break;
             case R.id.privicy:
                 if(privacy.isChecked())
@@ -124,14 +135,6 @@ public class Mijn_Kappr_Register extends AppCompatActivity implements View.OnCli
 
         }
     }
-
-
-
-    //todo
-    //todo
-    //todo
-
-
 
     private void userRegister(){
 
