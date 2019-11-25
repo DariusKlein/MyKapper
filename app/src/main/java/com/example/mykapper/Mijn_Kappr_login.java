@@ -22,6 +22,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import static com.example.mykapper.MainActivity.Newpage;
 import static com.example.mykapper.MainActivity.loggedIn;
 
 
@@ -61,9 +62,8 @@ public class Mijn_Kappr_login extends AppCompatActivity implements View.OnClickL
         mAuth = FirebaseAuth.getInstance();
 
         if (loggedIn == true) {
-
-            Functions.OpenMijnKappr();
-
+            Newpage = "MijnKappr";
+            Open_activity();
         }
 
 
@@ -77,29 +77,26 @@ public class Mijn_Kappr_login extends AppCompatActivity implements View.OnClickL
         getSupportActionBar().setTitle("Kapsalons");
         return true;
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+
         switch (item.getItemId()) {
             case android.R.id.home:
-                Functions.OpenMainActivity();
-                break;
-            case R.id.item3:
-
+                Newpage = "MainActivity";
+                Open_activity();
                 break;
             case R.id.subitem1:
-
-                Functions.Opensettings();
-
+                Newpage = "settings";
+                Open_activity();
                 break;
             case R.id.subitem2:
-
-                Functions.OpenMijn_Kappr_login();
-
+                Newpage = "Mijn_Kappr_login";
+                Open_activity();
                 break;
             case R.id.subitem3:
-
-                Functions.OpenDatabase_Test();
-
+                Newpage = "Database_Test";
+                Open_activity();
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -116,22 +113,19 @@ public class Mijn_Kappr_login extends AppCompatActivity implements View.OnClickL
 
         switch (v.getId()) {
             case R.id.inloggen:
-
-                if (Email.length() < 5 || Wachtwoord.length() < 5)
-
-                //todo niets ingevuld
-                    Functions.OpenMijn_Kappr_login();
-
+                if(Email.length() < 5 || Wachtwoord.length() < 5) {
+                    Newpage = "Mijn_Kappr_login";
+                    Open_activity();
+                }
                 else
-
-                signin();
-
+                   signin();
 
                 break;
 
             case R.id.Register_pagina:
 
-                Functions.OpenMijn_Kappr_Register();
+                Newpage = "Mijn_Kappr_Register";
+                Open_activity();
 
 
                 break;
@@ -159,7 +153,8 @@ public class Mijn_Kappr_login extends AppCompatActivity implements View.OnClickL
 
                             loggedIn = true;
 
-                            Functions.OpenMijnKappr();
+                            Newpage = "MijnKappr";
+                            Open_activity();
 
                         } else {
 
@@ -172,5 +167,8 @@ public class Mijn_Kappr_login extends AppCompatActivity implements View.OnClickL
                 });
 
     }
-
+    public void Open_activity(){
+        Intent intent = new Intent(this, Functions.class);
+        this.startActivity(intent);
+    }
 }

@@ -23,6 +23,9 @@ public class MainActivity extends AppCompatActivity
 
     static float Rating;
 
+    static String Newpage;
+
+
     static boolean loggedIn = false;
 
 
@@ -33,6 +36,8 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -85,33 +90,29 @@ public class MainActivity extends AppCompatActivity
 
         switch (view.getId()) {
             case R.id.Instellingen:
-                Functions.Opensettings ();
+                Newpage = "settings";
+                Open_activity();
                 break;
             case R.id.MyAccount:
-                Functions.OpenMijn_Kappr_login ();
-
+                Newpage = "Mijn_Kappr_login";
+                Open_activity();
                 break;
             case R.id.Zoeken:
-                Functions.Opensecond_activity();
+                Newpage = "Second_activity";
+                Open_activity();
                 break;
 
         }
     }
 
-
-
-
-
-
+    public void Open_activity(){
+        Intent intent = new Intent(this, Functions.class);
+        this.startActivity(intent);
+    }
 
     }
 
 
-//todo Dinsdag:maak front page mooi
-//todo Dinsdag: todo mylistadapt en second_activity met globale variablen
-//todo
-//todo
-//todo
 
 
 

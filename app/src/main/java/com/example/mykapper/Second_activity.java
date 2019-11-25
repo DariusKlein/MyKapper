@@ -12,6 +12,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
+import static com.example.mykapper.MainActivity.Newpage;
 
 
 public class Second_activity extends AppCompatActivity {
@@ -59,31 +60,24 @@ public class Second_activity extends AppCompatActivity {
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
                     if (position == 0) {
-
-
-                        //todo kapper die op positie 0 staat = Gekozenkapper (variable) en geef dit door
-                        Functions.OpenKapsalon_algemeen(); //todo maak pagina's voor iedere kapper en link naar de goede kapper
+                        Newpage = "Kapsalon_algemeen";
+                        Open_activity();
                     } else if (position == 1) {
-
-
-                        //todo kapper die op positie 1 staat = Gekozenkapper (variable) en geef dit door
-                        Functions.OpenKapsalon_algemeen();//todo maak pagina's voor iedere kapper en link naar de goede kapper
+                        Newpage = "Kapsalon_algemeen";
+                        Open_activity();
                     } else if (position == 2) {
 
-                        //todo kapper die op positie 2 staat = Gekozenkapper (variable) en geef dit door
-                        Functions.OpenKapsalon_algemeen();//todo maak pagina's voor iedere kapper en link naar de goede kapper
-
+                        Newpage = "Kapsalon_algemeen";
+                        Open_activity();
                     } else if (position == 3) {
 
-                        //todo kapper die op positie 3 staat = Gekozenkapper (variable) en geef dit door
-                        Functions.OpenKapsalon_algemeen();//todo maak pagina's voor iedere kapper en link naar de goede kapper
-
+                        Newpage = "Kapsalon_algemeen";
+                        Open_activity();
 
                     } else if (position == 4) {
 
-                        //todo kapper die op positie 4 staat = Gekozenkapper (variable) en geef dit door
-                        Functions.OpenKapsalon_algemeen(); //todo maak pagina's voor iedere kapper en link naar de goede kapper
-
+                        Newpage = "Kapsalon_algemeen";
+                        Open_activity();
                     }
                 }
             });
@@ -100,33 +94,33 @@ public class Second_activity extends AppCompatActivity {
         }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+
         switch (item.getItemId()) {
             case android.R.id.home:
-                Functions.OpenMainActivity();
-                break;
-            case R.id.item3:
-
+                Newpage = "MainActivity";
+                Open_activity();
                 break;
             case R.id.subitem1:
-
-                Functions.Opensettings();
-
+                Newpage = "settings";
+                Open_activity();
                 break;
             case R.id.subitem2:
-
-                Functions.OpenMijnKappr();
-
+                Newpage = "Mijn_Kappr_login";
+                Open_activity();
                 break;
             case R.id.subitem3:
-
-                Functions.OpenDatabase_Test();
-
+                Newpage = "Database_Test";
+                Open_activity();
                 break;
         }
         return super.onOptionsItemSelected(item);
     }
 
 
+    public void Open_activity(){
+        Intent intent = new Intent(this, Functions.class);
+        this.startActivity(intent);
+    }
     }
 
 

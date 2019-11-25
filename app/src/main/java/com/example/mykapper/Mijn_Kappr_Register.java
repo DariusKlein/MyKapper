@@ -26,6 +26,8 @@ import java.util.Random;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
+import static com.example.mykapper.MainActivity.Newpage;
+
 
 public class Mijn_Kappr_Register extends AppCompatActivity implements View.OnClickListener {
 
@@ -74,27 +76,23 @@ public class Mijn_Kappr_Register extends AppCompatActivity implements View.OnCli
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+
         switch (item.getItemId()) {
             case android.R.id.home:
-                Functions.OpenMainActivity();
-                break;
-            case R.id.item3:
-
+                Newpage = "MainActivity";
+                Open_activity();
                 break;
             case R.id.subitem1:
-
-                Functions.Opensettings();
-
+                Newpage = "settings";
+                Open_activity();
                 break;
             case R.id.subitem2:
-
-                Functions.OpenMijnKappr();
-
+                Newpage = "Mijn_Kappr_login";
+                Open_activity();
                 break;
             case R.id.subitem3:
-
-                Functions.OpenDatabase_Test();
-
+                Newpage = "Database_Test";
+                Open_activity();
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -202,13 +200,16 @@ public void add_user_database(){
         public void onComplete(@NonNull Task<DocumentSnapshot> task) {
             if (task.isSuccessful()) {
                 DocumentSnapshot doc = task.getResult();
-                Functions.OpenMijn_Kappr_login();
-
+                Newpage = "Mijn_Kappr_login";
+                Open_activity();
 
             }
         }
 
     });
 }
-
+    public void Open_activity(){
+        Intent intent = new Intent(this, Functions.class);
+        this.startActivity(intent);
+    }
 }

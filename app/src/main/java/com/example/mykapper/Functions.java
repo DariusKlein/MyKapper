@@ -2,78 +2,80 @@ package com.example.mykapper;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Context;
-import android.content.Intent;
-import android.view.MenuItem;
 
+import android.content.Intent;
+import android.os.Bundle;
+
+
+
+import static com.example.mykapper.MainActivity.Newpage;
 
 public class Functions extends AppCompatActivity {
 
-    public void onCreate(){
-        mContext = this.getApplicationContext();
-    }
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
 
-    private static Context mContext;
-
-    public static void OpenDatabase_Test () {
-        Intent intent = new Intent(mContext, database_test.class);
-        mContext.startActivity(intent);
-    }
-    public static void OpenKapsalon_algemeen() {
-        Intent intent = new Intent(mContext, Kapsalon_algemeen.class);
-        mContext.startActivity(intent);
-    }
-    public static void OpenMainActivity () {
-        Intent intent = new Intent(mContext, MainActivity.class);
-        mContext.startActivity(intent);
-    }
-    public static void OpenMijn_Kappr_login () {
-        Intent intent = new Intent(mContext, Mijn_Kappr_login.class);
-        mContext.startActivity(intent);
-    }
-    public static void OpenMijn_Kappr_Register () {
-        Intent intent = new Intent(mContext, Mijn_Kappr_Register.class);
-        mContext.startActivity(intent);
-    }
-    public static void OpenMijnKappr () {
-        Intent intent = new Intent(mContext, MijnKappr.class);
-        mContext.startActivity(intent);
-    }
-    public static void Opensecond_activity () {
-        Intent intent = new Intent(mContext, Second_activity.class);
-        mContext.startActivity(intent);
-    }
-    public static void Opensettings () {
-        Intent intent = new Intent(mContext, SettingsActivity.class);
-        mContext.startActivity(intent);
-    }
-
-
-    public static void Options_menu (MenuItem item) {
-
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                Functions.OpenMainActivity();
+        switch (Newpage) {
+            case "Second_activity":
+                Opensecond_activity();
                 break;
-            case R.id.item3:
-
+            case "Database_Test":
+                OpenDatabase_Test();
                 break;
-            case R.id.subitem1:
-
-                Functions.Opensettings();
-
+            case "Kapsalon_algemeen":
+                OpenKapsalon_algemeen();
                 break;
-            case R.id.subitem2:
-
-                Functions.OpenMijnKappr();
-
+            case "MainActivity":
+                OpenMainActivity();
                 break;
-            case R.id.subitem3:
-
-                Functions.OpenDatabase_Test();
-
+            case "Mijn_Kappr_login":
+                OpenMijn_Kappr_login();
+                break;
+            case "Mijn_Kappr_Register":
+                OpenMijn_Kappr_Register();
+                break;
+            case "MijnKappr":
+                OpenMijnKappr();
+                break;
+            case "settings":
+                Opensettings();
                 break;
         }
+    }
+
+
+        public void OpenDatabase_Test () {
+            Intent intent = new Intent(this, database_test.class);
+            this.startActivity(intent);
+        }
+        public void OpenKapsalon_algemeen () {
+            Intent intent = new Intent(this, Kapsalon_algemeen.class);
+            this.startActivity(intent);
+        }
+        public void OpenMainActivity () {
+            Intent intent = new Intent(this, MainActivity.class);
+            this.startActivity(intent);
+        }
+        public void OpenMijn_Kappr_login () {
+            Intent intent = new Intent(this, Mijn_Kappr_login.class);
+            this.startActivity(intent);
+        }
+        public void OpenMijn_Kappr_Register () {
+            Intent intent = new Intent(this, Mijn_Kappr_Register.class);
+            this.startActivity(intent);
+        }
+        public void OpenMijnKappr () {
+            Intent intent = new Intent(this, MijnKappr.class);
+            this.startActivity(intent);
+        }
+        public void Opensecond_activity () {
+            Intent intent = new Intent(this, Second_activity.class);
+            this.startActivity(intent);
+        }
+        public void Opensettings () {
+            Intent intent = new Intent(this, SettingsActivity.class);
+            this.startActivity(intent);
+        }
+
 
     }
-}
