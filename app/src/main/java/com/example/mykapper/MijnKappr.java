@@ -28,6 +28,7 @@ public class MijnKappr extends AppCompatActivity {
         getSupportActionBar().setTitle("Kapsalons");
         return true;
     }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,53 +52,28 @@ public class MijnKappr extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                OpenMain();
+                Functions.OpenMainActivity();
                 break;
             case R.id.item3:
 
                 break;
             case R.id.subitem1:
 
-                OpenSettings();
+                Functions.Opensettings();
 
                 break;
             case R.id.subitem2:
 
-                OpenMijnkappr();
+                Functions.OpenMijnKappr();
 
                 break;
             case R.id.subitem3:
 
-                OpenDatabase_test();
+                Functions.OpenDatabase_Test();
 
                 break;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    public void OpenDatabase_test() {
-        Intent intent = new Intent(this, database_test.class);
-        startActivity(intent);
-
-    }
-
-
-    public void OpenMijnkappr() {
-        Intent intent = new Intent(this, MijnKappr.class);
-        startActivity(intent);
-
-    }
-
-    public void OpenSettings() {
-        Intent intent = new Intent(this, SettingsActivity.class);
-        startActivity(intent);
-
-    }
-
-    public void OpenMain() {
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
-
     }
 
 

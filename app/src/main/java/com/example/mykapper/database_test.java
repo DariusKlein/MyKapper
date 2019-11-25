@@ -48,10 +48,7 @@ public EditText databasein3;
         databasetest.setOnClickListener(this);
 
     }
-    public void openactivityconfirm () {
-        Intent intent = new Intent(this, MainActivity.class); //todo comfirm activity
-        startActivity(intent);
-    }
+
 
     @Override
     public void onClick(View v) {
@@ -60,7 +57,6 @@ public EditText databasein3;
 
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        FirebaseFirestore db2 = FirebaseFirestore.getInstance();
 
         databasein1.getText();
         databasein2.getText();
@@ -85,10 +81,8 @@ public EditText databasein3;
 
         DocumentReference docRef = db.collection("Afspraken").document(MyNextDocID);
 
-// Add a new document with a generated ID
+
         docRef.set(Test);
-        //
-        //Read
         DocumentReference docRef2 = db.collection("Afspraken").document(MyNextDocID);
         docRef2.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override

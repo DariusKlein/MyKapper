@@ -38,7 +38,7 @@ public class Kapsalon_algemeen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(activity_kapsalon_algemeen);
-        Toolbar Toolbar = (Toolbar) findViewById(toolbar);
+        Toolbar Toolbar = findViewById(toolbar);
         setSupportActionBar(Toolbar);
         TabsPagerAdapter2 TabsPagerAdapter = new TabsPagerAdapter2(this, getSupportFragmentManager());
         ViewPager viewPager = findViewById(view_pager);
@@ -56,53 +56,28 @@ public class Kapsalon_algemeen extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                OpenMain();
+                Functions.OpenMainActivity();
                 break;
             case R.id.item3:
 
                 break;
             case R.id.subitem1:
 
-                OpenSettings();
+                Functions.Opensettings();
 
                 break;
             case R.id.subitem2:
 
-                OpenMijnKappr();
+                Functions.OpenMijnKappr();
 
                 break;
             case R.id.subitem3:
 
-                OpenDatabase_test();
+                Functions.OpenDatabase_Test();
 
                 break;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    public void OpenDatabase_test() {
-        Intent intent = new Intent(this, database_test.class);
-        startActivity(intent);
-
-    }
-
-
-    public void OpenMijnKappr() {
-        Intent intent = new Intent(this, Mijn_Kappr_login.class);
-        startActivity(intent);
-
-    }
-
-    public void OpenSettings() {
-        Intent intent = new Intent(this, SettingsActivity.class);
-        startActivity(intent);
-
-    }
-
-    public void OpenMain() {
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
-
     }
 
 

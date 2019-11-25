@@ -12,23 +12,17 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-
 import androidx.appcompat.widget.Toolbar;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-
-import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
-
-
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -82,57 +76,32 @@ public class Mijn_Kappr_Register extends AppCompatActivity implements View.OnCli
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                OpenMain();
+                Functions.OpenMainActivity();
                 break;
             case R.id.item3:
 
                 break;
             case R.id.subitem1:
 
-                OpenSettings();
+                Functions.Opensettings();
 
                 break;
             case R.id.subitem2:
 
-                OpenMijn_kappr_login();
+                Functions.OpenMijnKappr();
 
                 break;
             case R.id.subitem3:
 
-                OpenDatabase_test();
+                Functions.OpenDatabase_Test();
 
                 break;
         }
         return super.onOptionsItemSelected(item);
     }
-    public void OpenMijnkappr() {
-        Intent intent = new Intent(this, MijnKappr.class);
-        startActivity(intent);
 
-    }
-    public void OpenMain() {
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
 
-    }
 
-    public void OpenMijn_kappr_login() {
-        Intent intent = new Intent(this, Mijn_Kappr_login.class);
-        startActivity(intent);
-
-    }
-
-    public void OpenSettings() {
-        Intent intent = new Intent(this, SettingsActivity.class);
-        startActivity(intent);
-
-    }
-
-    public void OpenDatabase_test() {
-        Intent intent = new Intent(this, database_test.class);
-        startActivity(intent);
-
-    }
 
 
     @Override
@@ -233,7 +202,7 @@ public void add_user_database(){
         public void onComplete(@NonNull Task<DocumentSnapshot> task) {
             if (task.isSuccessful()) {
                 DocumentSnapshot doc = task.getResult();
-                OpenMijn_kappr_login();
+                Functions.OpenMijn_Kappr_login();
 
 
             }

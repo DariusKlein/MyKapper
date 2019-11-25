@@ -62,7 +62,7 @@ public class Mijn_Kappr_login extends AppCompatActivity implements View.OnClickL
 
         if (loggedIn == true) {
 
-            OpenMijnkappr();
+            Functions.OpenMijnKappr();
 
         }
 
@@ -81,57 +81,30 @@ public class Mijn_Kappr_login extends AppCompatActivity implements View.OnClickL
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                OpenMain();
+                Functions.OpenMainActivity();
                 break;
             case R.id.item3:
 
                 break;
             case R.id.subitem1:
 
-                OpenSettings();
+                Functions.Opensettings();
 
                 break;
             case R.id.subitem2:
 
-                OpenMijn_kappr_login();
+                Functions.OpenMijn_Kappr_login();
 
                 break;
             case R.id.subitem3:
 
-                OpenDatabase_test();
+                Functions.OpenDatabase_Test();
 
                 break;
         }
         return super.onOptionsItemSelected(item);
     }
-    public void OpenMijnkappr() {
-        Intent intent = new Intent(this, MijnKappr.class);
-        startActivity(intent);
 
-    }
-    public void OpenMain() {
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
-
-    }
-
-    public void OpenMijn_kappr_login() {
-        Intent intent = new Intent(this, Mijn_Kappr_login.class);
-        startActivity(intent);
-
-    }
-
-    public void OpenSettings() {
-        Intent intent = new Intent(this, SettingsActivity.class);
-        startActivity(intent);
-
-    }
-
-    public void OpenDatabase_test() {
-        Intent intent = new Intent(this, database_test.class);
-        startActivity(intent);
-
-    }
 
 
     @Override
@@ -147,7 +120,7 @@ public class Mijn_Kappr_login extends AppCompatActivity implements View.OnClickL
                 if (Email.length() < 5 || Wachtwoord.length() < 5)
 
                 //todo niets ingevuld
-                OpenMijn_kappr_login();
+                    Functions.OpenMijn_Kappr_login();
 
                 else
 
@@ -187,7 +160,7 @@ public class Mijn_Kappr_login extends AppCompatActivity implements View.OnClickL
 
                             loggedIn = true;
 
-                            OpenMijnkappr();
+                            Functions.OpenMijnKappr();
 
                         } else {
 
@@ -200,4 +173,5 @@ public class Mijn_Kappr_login extends AppCompatActivity implements View.OnClickL
                 });
 
     }
+
 }

@@ -1,22 +1,15 @@
 package com.example.mykapper;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.SharedPreferences;
 import android.os.Bundle;
-
 import android.content.Intent;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.RatingBar.OnRatingBarChangeListener;
 import android.widget.RatingBar;
-
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+
 
 
 public class MainActivity extends AppCompatActivity
@@ -25,13 +18,15 @@ public class MainActivity extends AppCompatActivity
     private Button SettingButton;
     private Button My_MyKappr;
     private RatingBar StartRating;
-    static float Rating;
+
     private FirebaseAuth mAuth;
+
+    static float Rating;
+
     static boolean loggedIn = false;
 
+
     String preferences_name = "isFirstTime";
-
-
 
 
     @Override
@@ -42,13 +37,16 @@ public class MainActivity extends AppCompatActivity
         mAuth = FirebaseAuth.getInstance();
 
         Button = findViewById(R.id.Zoeken);
-        SettingButton = findViewById(R.id.Instellingen);
-        My_MyKappr = findViewById(R.id.MyAccount);
-        SettingButton.setOnClickListener(this);
         Button.setOnClickListener(this);
+
+        SettingButton = findViewById(R.id.Instellingen);
+        SettingButton.setOnClickListener(this);
+
+        My_MyKappr = findViewById(R.id.MyAccount);
         My_MyKappr.setOnClickListener(this);
 
         mAuth = FirebaseAuth.getInstance();
+
 
 
         firstTime();
@@ -61,11 +59,9 @@ public class MainActivity extends AppCompatActivity
         SharedPreferences sharedTime = getSharedPreferences(preferences_name,0);
         if (sharedTime.getBoolean("firstTime",true))
         {
-
             sharedTime.edit().putBoolean("firstTime",false).apply();
         }
         else FirebaseAuth.getInstance().signOut();
-
     }
 
     @Override
@@ -74,9 +70,6 @@ public class MainActivity extends AppCompatActivity
 
         FirebaseUser currentUser = mAuth.getCurrentUser();
 
-
-
-
         System.out.print(currentUser);
 
 
@@ -84,39 +77,30 @@ public class MainActivity extends AppCompatActivity
 
 
     public void onClick(View view) {
-        StartRating = (RatingBar) findViewById(R.id.StartRating);
-
+        StartRating = findViewById(R.id.StartRating);
 
         Rating = StartRating.getRating();
+
         System.out.println(Rating);
 
         switch (view.getId()) {
             case R.id.Instellingen:
-                Opensettings ();
+                Functions.Opensettings ();
                 break;
             case R.id.MyAccount:
-                OpenMijn_Kappr_login ();
+                Functions.OpenMijn_Kappr_login ();
+
                 break;
             case R.id.Zoeken:
-                Opensecond_activity();
+                Functions.Opensecond_activity();
                 break;
 
         }
     }
 
-        public void Opensecond_activity () {
-            Intent intent = new Intent(this, Second_activity.class);
-            startActivity(intent);
-        }
 
-        public void Opensettings () {
-            Intent intent = new Intent(this, SettingsActivity.class);
-            startActivity(intent);
-        }
-        public void OpenMijn_Kappr_login () {
-            Intent intent = new Intent(this, Mijn_Kappr_login.class);
-            startActivity(intent);
-        }
+
+
 
 
 
@@ -128,3 +112,6 @@ public class MainActivity extends AppCompatActivity
 //todo
 //todo
 //todo
+
+
+
