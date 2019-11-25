@@ -50,31 +50,10 @@ public class MijnKappr extends AppCompatActivity {
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                Functions.OpenMainActivity();
-                break;
-            case R.id.item3:
-
-                break;
-            case R.id.subitem1:
-
-                Functions.Opensettings();
-
-                break;
-            case R.id.subitem2:
-
-                Functions.OpenMijnKappr();
-
-                break;
-            case R.id.subitem3:
-
-                Functions.OpenDatabase_Test();
-
-                break;
-        }
+        Functions.Options_menu(item);
         return super.onOptionsItemSelected(item);
     }
+
 
 
 

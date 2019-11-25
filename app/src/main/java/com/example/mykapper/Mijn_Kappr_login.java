@@ -131,8 +131,7 @@ public class Mijn_Kappr_login extends AppCompatActivity implements View.OnClickL
 
             case R.id.Register_pagina:
 
-                Intent intent = new Intent(this, Mijn_Kappr_Register.class);
-                startActivity(intent);
+                Functions.OpenMijn_Kappr_Register();
 
 
                 break;

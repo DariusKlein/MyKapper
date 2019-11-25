@@ -4,7 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.content.Intent;
-
+import android.view.MenuItem;
 
 
 public class Functions extends AppCompatActivity {
@@ -46,5 +46,34 @@ public class Functions extends AppCompatActivity {
     public static void Opensettings () {
         Intent intent = new Intent(mContext, SettingsActivity.class);
         mContext.startActivity(intent);
+    }
+
+
+    public static void Options_menu (MenuItem item) {
+
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                Functions.OpenMainActivity();
+                break;
+            case R.id.item3:
+
+                break;
+            case R.id.subitem1:
+
+                Functions.Opensettings();
+
+                break;
+            case R.id.subitem2:
+
+                Functions.OpenMijnKappr();
+
+                break;
+            case R.id.subitem3:
+
+                Functions.OpenDatabase_Test();
+
+                break;
+        }
+
     }
 }
