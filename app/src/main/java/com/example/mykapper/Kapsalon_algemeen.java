@@ -69,6 +69,7 @@ public class Kapsalon_algemeen extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
     public void Open_activity(){
         Intent intent = new Intent(this, Functions.class);
         this.startActivity(intent);
