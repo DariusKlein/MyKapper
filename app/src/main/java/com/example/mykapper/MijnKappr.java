@@ -4,13 +4,16 @@ package com.example.mykapper;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
+import androidx.core.app.ActivityCompat;
 import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.tabs.TabLayout;
@@ -19,6 +22,7 @@ import static com.example.mykapper.MainActivity.Newpage;
 
 public class MijnKappr extends AppCompatActivity {
 
+    public int YourRequestCode = 1;
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -33,7 +37,7 @@ public class MijnKappr extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mijn_kappr);
-        Toolbar Toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar Toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(Toolbar);
         TabsPagerAdapter tabsPagerAdapter = new TabsPagerAdapter(this, getSupportFragmentManager());
 
@@ -42,7 +46,19 @@ public class MijnKappr extends AppCompatActivity {
 
         TabLayout tabs = findViewById(R.id.tabs);
         tabs.setupWithViewPager(viewPager);
+
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED &&
+                ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+
+
+        }
+        else{
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION},YourRequestCode);
+        }
     }
+
+
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
