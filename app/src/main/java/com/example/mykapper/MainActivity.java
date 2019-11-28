@@ -114,7 +114,7 @@ public class MainActivity extends AppCompatActivity
                 Open_activity();
                 break;
             case R.id.Zoeken:
-                Newpage = "Second_activity";
+                Newpage = "Loading";
                 Open_activity();
                 break;
 
@@ -122,7 +122,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     public void Open_activity(){
-        Intent intent = new Intent(this, Loading.class);
+        Intent intent = new Intent(this, Functions.class);
         this.startActivity(intent);
     }
     }
