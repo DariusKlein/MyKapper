@@ -122,7 +122,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     public void Open_activity(){
-        Intent intent = new Intent(this, Functions.class);
+        Intent intent = new Intent(this, Loading.class);
         this.startActivity(intent);
     }
     }
