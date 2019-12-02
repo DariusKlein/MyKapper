@@ -19,9 +19,6 @@ public class Functions extends AppCompatActivity {
             case "Database_Test":
                 OpenDatabase_Test();
                 break;
-            case "Kapsalon_algemeen":
-                OpenKapsalon_algemeen();
-                break;
             case "MainActivity":
                 OpenMainActivity();
                 break;
@@ -39,6 +36,11 @@ public class Functions extends AppCompatActivity {
                 break;
             case "Loading":
                 Loading();
+                break;
+            case "Kapsalon_algemeen":
+
+                //swith voor kapper selectie
+                OpenKapsalon_algemeen();
                 break;
         }
     }

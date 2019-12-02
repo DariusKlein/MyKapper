@@ -114,7 +114,7 @@ public class MainActivity extends AppCompatActivity
                 Open_activity();
                 break;
             case R.id.Zoeken:
-                Newpage = "Loading";
+                Newpage = "Second_activity";
                 Open_activity();
                 break;
 

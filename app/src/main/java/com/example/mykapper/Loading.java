@@ -2,8 +2,11 @@ package com.example.mykapper;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
+import android.widget.ListView;
 import android.widget.TextView;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -14,11 +17,18 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.GeoPoint;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import static com.example.mykapper.MainActivity.Newpage;
+
+import java.text.DecimalFormat;
+import java.util.ArrayList;
 
 public class Loading extends AppCompatActivity {
 
+    ListView list;
+
     private TextView loading;
     private String DocID;
+    private String DocPic;
     private double Rating;
     private static GeoPoint Geolocation;
     private static double lat2;
@@ -40,8 +50,6 @@ public class Loading extends AppCompatActivity {
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 
-
-
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
         fusedLocationClient.getLastLocation()
@@ -54,18 +62,25 @@ public class Loading extends AppCompatActivity {
 
 
         db.collection("Kapsalons")
-                .whereGreaterThanOrEqualTo("Rating",4 )
+                .whereGreaterThanOrEqualTo("Rating",0 )
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
+                            loading.setText("");
+
+                            int documentcount = 0;
+
                             for (QueryDocumentSnapshot document : task.getResult()) {
 
+
+                                documentcount = (documentcount + 1);
 
                                 Geolocation = document.getGeoPoint("Afstand");
                                 Rating = document.getDouble("Rating");
                                 DocID = (document.getId());
+                                DocPic = document.getString("image");
 
                                 lat2 = Geolocation.getLatitude();
                                 lon2 = Geolocation.getLongitude();
@@ -74,16 +89,30 @@ public class Loading extends AppCompatActivity {
                                 loc2.setLongitude(lon2);
 
                                 float distanceInMeters = loc1.distanceTo(loc2);
-                                loading.setText(distanceInMeters + " Meter");
+
+                                DecimalFormat df = new DecimalFormat();
+                                df.setMaximumFractionDigits(2);
+                                float distanceInKM = (distanceInMeters / 1000);
+                                loading.append(distanceInKM + " KM ");
+
+
+
+                                ArrayList<String> maintitle = new ArrayList<String>();
+                                maintitle.add(DocID);
+                                ArrayList<String> subtitle = new ArrayList<String>();
+                                subtitle.add(distanceInKM + "KM");
+                                ArrayList<String> imgid = new ArrayList<String>();
+                                imgid.add(DocPic);
 
                             }
                         }
                     }
 
-
-
                 });
     }
-
+    public void Open_activity(){
+        Intent intent = new Intent(this, Functions.class);
+        this.startActivity(intent);
+    }
     }
 
