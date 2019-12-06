@@ -26,8 +26,8 @@ public class MainActivity extends AppCompatActivity
     implements View.OnClickListener {
 
 
-    static Integer[] imagesList = {R.drawable.download_1,R.drawable.download_2, R.drawable.download_3, R.drawable.download_4, R.drawable.download_5,
-            R.drawable.kapper_1, R.drawable.kapper_2, R.drawable.kapper_3, R.drawable.kapper_4};
+    static Integer[] imagesList = {R.drawable.kapper_1, R.drawable.kapper_2, R.drawable.kapper_3, R.drawable.kapper_4,
+                                   R.drawable.kapper_5, R.drawable.kapper_6, R.drawable.kapper_7, R.drawable.kapper_8};
 
     public int YourRequestCode = 1;
 
