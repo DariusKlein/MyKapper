@@ -32,10 +32,17 @@ import com.google.firebase.storage.StorageReference;
 
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
 import static com.example.mykapper.MainActivity.Rating;
 import static com.example.mykapper.MainActivity.Newpage;
-import static com.example.mykapper.MainActivity.ImageList;
+import static com.example.mykapper.MainActivity.imagesList;
 
 
 public class Second_activity extends AppCompatActivity {
@@ -55,13 +62,15 @@ public class Second_activity extends AppCompatActivity {
     private FusedLocationProviderClient fusedLocationClient;
     private StorageReference mStorageRef;
 
-    final ArrayList<String> maintitle=new ArrayList<String>();
-    final ArrayList<String> subtitle=new ArrayList<String>();
-    final ArrayList<Integer> imgid=new ArrayList<Integer>();
+    final ArrayList<String> maintitle = new ArrayList<String>();
+    final ArrayList<String> subtitle = new ArrayList<String>();
+    final ArrayList<Integer> imgid = new ArrayList<Integer>();
+    final TreeMap<Float, Integer> DocIDandPIC = new TreeMap<>();
+    final TreeMap<Float, String> ListListList = new TreeMap<>();
+
 
 
     ListView list;
-
 
 
     @Override
@@ -76,41 +85,42 @@ public class Second_activity extends AppCompatActivity {
 
         Toolbar Toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(Toolbar);
-        }
+    }
 
-        public void Setuplist(){
+    public void Setuplist() {
 
-            MyListAdapter adapter = new MyListAdapter(this, maintitle, subtitle, imgid);
-            list = findViewById(R.id.list);
-            list.setAdapter(adapter);
+        MyListAdapter adapter = new MyListAdapter(this, maintitle, subtitle, imgid, DocIDandPIC, ListListList);
+        list = findViewById(R.id.list);
+        list.setAdapter(adapter);
 
-            list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                    for (int i = 0; i <= position; i = i + 1) {
-                        if (position == i) {
+                for (int i = 0; i <= position; i = i + 1) {
+                    if (position == i) {
 
-                            int KapperID = i;
-                            Newpage = "Kapsalon_algemeen";
-                            Open_activity();
+                        int KapperID = i;
+                        Newpage = "Kapsalon_algemeen";
+                        Open_activity();
 
-                        }
                     }
                 }
-            });
+            }
+        });
 
-        }
+    }
 
-        @Override
-        public boolean onCreateOptionsMenu (Menu menu){
-            MenuInflater inflater = getMenuInflater();
-            inflater.inflate(R.menu.screen_2_menu, menu);
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setTitle("Kapsalons");
-            return true;
-        }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.screen_2_menu, menu);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle("Kapsalons");
+        return true;
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
@@ -136,11 +146,12 @@ public class Second_activity extends AppCompatActivity {
     }
 
 
-    public void Open_activity(){
+    public void Open_activity() {
         Intent intent = new Intent(this, Functions.class);
         this.startActivity(intent);
     }
-    public void Supersetup(){
+
+    public void Supersetup() {
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 
@@ -155,7 +166,7 @@ public class Second_activity extends AppCompatActivity {
                 });
 
         db.collection("Kapsalons")
-                .whereGreaterThanOrEqualTo("Rating",(int)Rating )
+                .whereGreaterThanOrEqualTo("Rating", (int) Rating)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -184,27 +195,35 @@ public class Second_activity extends AppCompatActivity {
 
                                 float distanceInMeters = loc1.distanceTo(loc2);
 
-                                if (distanceInMeters <= 1000){
+                                if (distanceInMeters <= 1000) {
 
                                     distanceInKM = distanceInMeters;
-                                }
-                                else {
+                                } else {
                                     distanceInKM = (distanceInMeters / 1000);
                                 }
 
                                 maintitle.add(DocID);
                                 String StringInKM = String.format("%.2f", distanceInKM);
                                 subtitle.add(StringInKM + " KM");
+                                imgid.add(imagesList[DocPic]);
 
-                                imgid.add((int)ImageList.get(1));
 
+                                ListListList.put(distanceInKM, DocID);
 
-                                Setuplist();
+                                DocIDandPIC.put(distanceInKM, imagesList[DocPic]);
                             }
+
+
+                            Setuplist();
                         }
 
 
                     }
                 });
+    }
+
+    public void onBackPressed() {
+        Newpage = "MainActivity";
+        Open_activity();
     }
 }

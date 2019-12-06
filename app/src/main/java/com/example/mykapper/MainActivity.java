@@ -26,7 +26,8 @@ public class MainActivity extends AppCompatActivity
     implements View.OnClickListener {
 
 
-    Integer[] images = {R.drawable.download_3,R.drawable.download_2, R.drawable.download_1, R.drawable.Kapper_3};
+    static Integer[] imagesList = {R.drawable.download_1,R.drawable.download_2, R.drawable.download_3, R.drawable.download_4, R.drawable.download_5,
+            R.drawable.kapper_1, R.drawable.kapper_2, R.drawable.kapper_3, R.drawable.kapper_4};
 
     public int YourRequestCode = 1;
 
@@ -89,8 +90,6 @@ public class MainActivity extends AppCompatActivity
 
     public  void  firstTime(){
 
-        ImageList.add(R.drawable.download_1);
-
         SharedPreferences sharedTime = getSharedPreferences(preferences_name,0);
         if (sharedTime.getBoolean("firstTime",true))
         {
@@ -136,6 +135,11 @@ public class MainActivity extends AppCompatActivity
     public void Open_activity(){
         Intent intent = new Intent(this, Functions.class);
         this.startActivity(intent);
+    }
+    @Override
+    public void onBackPressed() {
+        Newpage = "MainActivity";
+        Open_activity();
     }
     }
 

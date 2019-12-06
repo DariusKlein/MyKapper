@@ -8,11 +8,7 @@ import android.os.Bundle;
 import static com.example.mykapper.MainActivity.Newpage;
 
 public class Functions extends AppCompatActivity {
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        OpenMainActivity();
-    }
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
