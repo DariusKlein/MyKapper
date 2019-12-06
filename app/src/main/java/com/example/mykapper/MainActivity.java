@@ -15,10 +15,18 @@ import android.widget.RatingBar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.sql.Array;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity
     implements View.OnClickListener {
+
+
+    Integer[] images = {R.drawable.download_3,R.drawable.download_2, R.drawable.download_1, R.drawable.Kapper_3};
 
     public int YourRequestCode = 1;
 
@@ -29,6 +37,8 @@ public class MainActivity extends AppCompatActivity
     private RatingBar StartRating;
 
     private FirebaseAuth mAuth;
+
+    static ArrayList ImageList;
 
     static float Rating;
 
@@ -78,6 +88,8 @@ public class MainActivity extends AppCompatActivity
 
 
     public  void  firstTime(){
+
+        ImageList.add(R.drawable.download_1);
 
         SharedPreferences sharedTime = getSharedPreferences(preferences_name,0);
         if (sharedTime.getBoolean("firstTime",true))

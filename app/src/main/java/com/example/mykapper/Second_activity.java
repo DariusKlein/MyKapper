@@ -27,18 +27,23 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.GeoPoint;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 
 import java.util.ArrayList;
 
 import static com.example.mykapper.MainActivity.Rating;
 import static com.example.mykapper.MainActivity.Newpage;
+import static com.example.mykapper.MainActivity.ImageList;
+
 
 public class Second_activity extends AppCompatActivity {
 
     private TextView loading;
     private String DocID;
-    private String DocPic;
+    private double Docdouble;
+    private Integer DocPic;
     private static GeoPoint Geolocation;
     private static double lat2;
     private static double lon2;
@@ -48,6 +53,7 @@ public class Second_activity extends AppCompatActivity {
     private volatile boolean complete = false;
     public float distanceInKM;
     private FusedLocationProviderClient fusedLocationClient;
+    private StorageReference mStorageRef;
 
     final ArrayList<String> maintitle=new ArrayList<String>();
     final ArrayList<String> subtitle=new ArrayList<String>();
@@ -62,6 +68,8 @@ public class Second_activity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_second_activity);
+
+        mStorageRef = FirebaseStorage.getInstance().getReference();
 
         Supersetup();
 
@@ -165,7 +173,8 @@ public class Second_activity extends AppCompatActivity {
                                 Geolocation = document.getGeoPoint("Afstand");
                                 RatingDB = document.getDouble("Rating");
                                 DocID = (document.getId());
-                                DocPic = document.getString("image");
+                                Docdouble = document.getDouble("image");
+                                DocPic = (int) (Docdouble);
 
                                 lat2 = Geolocation.getLatitude();
                                 lon2 = Geolocation.getLongitude();
@@ -182,13 +191,12 @@ public class Second_activity extends AppCompatActivity {
                                 else {
                                     distanceInKM = (distanceInMeters / 1000);
                                 }
-                                //loading.append(distanceInKM + " KM ");
 
                                 maintitle.add(DocID);
                                 String StringInKM = String.format("%.2f", distanceInKM);
                                 subtitle.add(StringInKM + " KM");
-                                imgid.add(R.drawable.download_1);
 
+                                imgid.add((int)ImageList.get(1));
 
 
                                 Setuplist();
