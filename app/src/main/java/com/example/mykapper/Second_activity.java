@@ -28,10 +28,8 @@ import com.google.firebase.firestore.GeoPoint;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
-import java.text.DecimalFormat;
+
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
 
 import static com.example.mykapper.MainActivity.Rating;
 import static com.example.mykapper.MainActivity.Newpage;
