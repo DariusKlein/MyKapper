@@ -30,7 +30,10 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
 
+import static com.example.mykapper.MainActivity.Rating;
 import static com.example.mykapper.MainActivity.Newpage;
 
 public class Second_activity extends AppCompatActivity {
@@ -38,36 +41,22 @@ public class Second_activity extends AppCompatActivity {
     private TextView loading;
     private String DocID;
     private String DocPic;
-    private double Rating;
     private static GeoPoint Geolocation;
     private static double lat2;
     private static double lon2;
     private Location loc1 = new Location("");
     private Location loc2 = new Location("");
-
-
-
+    private double RatingDB;
+    private volatile boolean complete = false;
+    public float distanceInKM;
     private FusedLocationProviderClient fusedLocationClient;
 
+    final ArrayList<String> maintitle=new ArrayList<String>();
+    final ArrayList<String> subtitle=new ArrayList<String>();
+    final ArrayList<Integer> imgid=new ArrayList<Integer>();
 
 
     ListView list;
-
-
-
-    String[] maintitle = {
-    };
-
-    String[] subtitle = {
-    };
-
-    Integer[] imgid = {
-
-    };
-
-
-
-
 
 
 
@@ -76,38 +65,35 @@ public class Second_activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_second_activity);
 
-
-        MyListAdapter adapter = new MyListAdapter(this, maintitle, subtitle, imgid);
-
         Supersetup();
-
-        list.setAdapter(adapter);
-
-        list = findViewById(R.id.list);
-
 
 
         Toolbar Toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(Toolbar);
+        }
 
+        public void Setuplist(){
+
+            MyListAdapter adapter = new MyListAdapter(this, maintitle, subtitle, imgid);
+            list = findViewById(R.id.list);
+            list.setAdapter(adapter);
 
             list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                    for (int i = 0; i <= position; i = i + 1)
+                    for (int i = 0; i <= position; i = i + 1) {
+                        if (position == i) {
 
-                    if (position == i) {
+                            int KapperID = i;
+                            Newpage = "Kapsalon_algemeen";
+                            Open_activity();
 
-                        int KapperID = i;
-                        Newpage = "Kapsalon_algemeen";
-                        Open_activity();
-
+                        }
                     }
                 }
             });
-
 
         }
 
@@ -162,15 +148,14 @@ public class Second_activity extends AppCompatActivity {
                     }
                 });
 
-
         db.collection("Kapsalons")
-                .whereGreaterThanOrEqualTo("Rating",0 )
+                .whereGreaterThanOrEqualTo("Rating",(int)Rating )
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
-                            loading.setText("");
+                            //loading.setText("");
 
                             int documentcount = 0;
 
@@ -180,7 +165,7 @@ public class Second_activity extends AppCompatActivity {
                                 documentcount = (documentcount + 1);
 
                                 Geolocation = document.getGeoPoint("Afstand");
-                                Rating = document.getDouble("Rating");
+                                RatingDB = document.getDouble("Rating");
                                 DocID = (document.getId());
                                 DocPic = document.getString("image");
 
@@ -192,19 +177,23 @@ public class Second_activity extends AppCompatActivity {
 
                                 float distanceInMeters = loc1.distanceTo(loc2);
 
-                                DecimalFormat df = new DecimalFormat();
-                                df.setMaximumFractionDigits(2);
-                                float distanceInKM = (distanceInMeters / 1000);
-                                loading.append(distanceInKM + " KM ");
+                                if (distanceInMeters <= 1000){
 
+                                    distanceInKM = distanceInMeters;
+                                }
+                                else {
+                                    distanceInKM = (distanceInMeters / 1000);
+                                }
+                                //loading.append(distanceInKM + " KM ");
 
-                                ArrayList<String> maintitle = new ArrayList<String>();
                                 maintitle.add(DocID);
-                                ArrayList<String> subtitle = new ArrayList<String>();
-                                subtitle.add(distanceInKM + "KM");
-                                ArrayList<String> imgid = new ArrayList<String>();
-                                imgid.add(DocPic);
+                                String StringInKM = String.format("%.2f", distanceInKM);
+                                subtitle.add(StringInKM + " KM");
+                                imgid.add(R.drawable.download_1);
 
+
+
+                                Setuplist();
                             }
                         }
 
