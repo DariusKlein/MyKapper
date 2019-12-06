@@ -35,6 +35,7 @@ class MyListAdapter extends ArrayAdapter<String> {
         this.subtitle=subtitle;
         this.imgid=imgid;
         this.DocIDandPIC = DocIDandPIC;
+
         this.ListListList = ListListList;
 
 
