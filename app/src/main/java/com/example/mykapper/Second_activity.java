@@ -62,7 +62,7 @@ public class Second_activity extends AppCompatActivity {
     private FusedLocationProviderClient fusedLocationClient;
     private StorageReference mStorageRef;
 
-    final ArrayList<String> maintitle = new ArrayList<String>();
+    static final ArrayList<String> maintitle = new ArrayList<String>();
     final ArrayList<String> subtitle = new ArrayList<String>();
     final ArrayList<Integer> imgid = new ArrayList<Integer>();
     final TreeMap<Float, Integer> DocIDandPIC = new TreeMap<>();

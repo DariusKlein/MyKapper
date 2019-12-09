@@ -7,8 +7,12 @@ import android.os.Bundle;
 
 import static com.example.mykapper.MainActivity.Newpage;
 import static com.example.mykapper.Second_activity.KapperID;
+import static com.example.mykapper.Second_activity.maintitle;
+
 
 public class Functions extends AppCompatActivity {
+
+
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,18 +43,27 @@ public class Functions extends AppCompatActivity {
                 Loading();
                 break;
             case "Kapsalon_algemeen":
-                switch(KapperID){
-                    case 1:
-                        Kapper_Placeholder1();
-                        break;
-                    case 2:
-                        Kapper_placeholder2();
-                        break;
-                    default:
-                        OpenKapsalon_algemeen();
-                }
+                //for (String i : maintitle)
+
+                //try {
+                    //DynamicIntent(Class.forName("com.example.mykapper." + i ));
+
+                //} catch (ClassNotFoundException e) {
+
+                //}
+
+                OpenKapsalon_algemeen();
+
                 break;
         }
+    }
+
+
+
+    public void DynamicIntent(Class activityClass) {
+        Intent intent = new Intent(this, activityClass);
+
+        startActivity(intent);
     }
 
 

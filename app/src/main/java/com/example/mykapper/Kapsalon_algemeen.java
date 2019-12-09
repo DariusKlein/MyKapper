@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 import androidx.viewpager.widget.ViewPager;
 
@@ -23,6 +24,8 @@ import static com.example.mykapper.R.layout.activity_kapsalon_algemeen;
 
 
 public class Kapsalon_algemeen extends AppCompatActivity {
+
+    static public TextView algemene_info;
 
     @Override
     public boolean onCreateOptionsMenu (Menu menu) {
@@ -41,6 +44,9 @@ public class Kapsalon_algemeen extends AppCompatActivity {
         TabsPagerAdapter2 TabsPagerAdapter = new TabsPagerAdapter2(this, getSupportFragmentManager());
         ViewPager viewPager = findViewById(view_pager);
         viewPager.setAdapter(TabsPagerAdapter);
+
+        algemene_info = findViewById(R.id.Algemene_informatie);
+
 
         TabLayout tabs = findViewById(Tabs1);
         tabs.setupWithViewPager(viewPager);
