@@ -74,4 +74,8 @@ public class Kapsalon_algemeen extends AppCompatActivity {
         Intent intent = new Intent(this, Functions.class);
         this.startActivity(intent);
     }
+    public void onBackPressed() {
+        Newpage = "MainActivity";
+        Open_activity();
+    }
 }

@@ -68,6 +68,7 @@ public class Second_activity extends AppCompatActivity {
     final TreeMap<Float, Integer> DocIDandPIC = new TreeMap<>();
     final TreeMap<Float, String> ListListList = new TreeMap<>();
 
+    static int KapperID;
 
 
     ListView list;
@@ -101,7 +102,8 @@ public class Second_activity extends AppCompatActivity {
                 for (int i = 0; i <= position; i = i + 1) {
                     if (position == i) {
 
-                        int KapperID = i;
+                        KapperID = i;
+
                         Newpage = "Kapsalon_algemeen";
                         Open_activity();
 
@@ -226,4 +228,5 @@ public class Second_activity extends AppCompatActivity {
         Newpage = "MainActivity";
         Open_activity();
     }
+
 }

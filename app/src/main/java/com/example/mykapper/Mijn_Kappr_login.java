@@ -179,4 +179,8 @@ public class Mijn_Kappr_login extends AppCompatActivity implements View.OnClickL
         Intent intent = new Intent(this, Functions.class);
         this.startActivity(intent);
     }
+    public void onBackPressed() {
+        Newpage = "MainActivity";
+        Open_activity();
+    }
 }

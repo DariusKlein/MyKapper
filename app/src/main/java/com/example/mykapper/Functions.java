@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import static com.example.mykapper.MainActivity.Newpage;
+import static com.example.mykapper.Second_activity.KapperID;
 
 public class Functions extends AppCompatActivity {
 
@@ -38,9 +39,16 @@ public class Functions extends AppCompatActivity {
                 Loading();
                 break;
             case "Kapsalon_algemeen":
-
-                //swith voor kapper selectie
-                OpenKapsalon_algemeen();
+                switch(KapperID){
+                    case 1:
+                        Kapper_Placeholder1();
+                        break;
+                    case 2:
+                        Kapper_placeholder2();
+                        break;
+                    default:
+                        OpenKapsalon_algemeen();
+                }
                 break;
         }
     }
@@ -82,7 +90,14 @@ public class Functions extends AppCompatActivity {
             Intent intent = new Intent(this, Loading.class);
             this.startActivity(intent);
         }
-
+    public void Kapper_Placeholder1 () {
+        Intent intent = new Intent(this, SettingsActivity.class);
+        this.startActivity(intent);
+    }
+    public void Kapper_placeholder2 () {
+        Intent intent = new Intent(this, SettingsActivity.class);
+        this.startActivity(intent);
+    }
 
 }
 

@@ -215,4 +215,8 @@ public void add_user_database(){
         Intent intent = new Intent(this, Functions.class);
         this.startActivity(intent);
     }
+    public void onBackPressed() {
+        Newpage = "MainActivity";
+        Open_activity();
+    }
 }
