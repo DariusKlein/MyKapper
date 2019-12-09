@@ -25,7 +25,6 @@ import static com.example.mykapper.R.layout.activity_kapsalon_algemeen;
 
 public class Kapsalon_algemeen extends AppCompatActivity {
 
-    static public TextView algemene_info;
 
     @Override
     public boolean onCreateOptionsMenu (Menu menu) {
@@ -45,7 +44,6 @@ public class Kapsalon_algemeen extends AppCompatActivity {
         ViewPager viewPager = findViewById(view_pager);
         viewPager.setAdapter(TabsPagerAdapter);
 
-        algemene_info = findViewById(R.id.Algemene_informatie);
 
 
         TabLayout tabs = findViewById(Tabs1);
@@ -76,7 +74,7 @@ public class Kapsalon_algemeen extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void Open_activity(){
+    public void Open_activity() {
         Intent intent = new Intent(this, Functions.class);
         this.startActivity(intent);
     }

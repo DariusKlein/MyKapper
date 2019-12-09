@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
@@ -90,11 +91,13 @@ public class Second_activity extends AppCompatActivity {
 
     public void Setuplist() {
 
+
+
         MyListAdapter adapter = new MyListAdapter(this, maintitle, subtitle, imgid, DocIDandPIC, ListListList);
         list = findViewById(R.id.list);
         list.setAdapter(adapter);
 
-        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -105,6 +108,9 @@ public class Second_activity extends AppCompatActivity {
                         KapperID = i;
 
                         Newpage = "Kapsalon_algemeen";
+                        list.setOnItemClickListener(null);
+
+
                         Open_activity();
 
                     }

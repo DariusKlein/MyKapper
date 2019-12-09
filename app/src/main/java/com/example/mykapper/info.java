@@ -20,13 +20,13 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import static com.example.mykapper.Kapsalon_algemeen.algemene_info;
+import org.w3c.dom.Text;
+
 import static com.example.mykapper.Second_activity.KapperID;
 import static com.example.mykapper.Second_activity.maintitle;
 
 
 public class info extends Fragment  {
-
 
     private static final String TAG = "info";
 
@@ -46,6 +46,11 @@ public class info extends Fragment  {
         pageViewModel.setIndex(TAG);
 
 
+
+    }
+
+    public void algemene_info(final TextView algemene_info){
+
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
         DocumentReference docRef = db.collection("Kapsalons").document(maintitle.get(KapperID));
@@ -56,15 +61,9 @@ public class info extends Fragment  {
                 if (task.isSuccessful()) {
                     DocumentSnapshot doc = task.getResult();
 
-                    doc.getString()
-                    StringBuilder fields = new StringBuilder("");
+                    String info = doc.getString("info");
 
-                    fields.append("Name: ").append(doc.get("Name"));
-                    fields.append("\nEmail: ").append(doc.get("Email"));
-                    fields.append("\nPhone: ").append(doc.get("Phone"));
-
-                    algemene_info.setText(fields.toString());
-                }
+                    algemene_info.setText(info);                }
             }
         });
 
@@ -73,7 +72,12 @@ public class info extends Fragment  {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.fragment_afspraken, container, false);
+        View root = inflater.inflate(R.layout.fragment_info, container, false);
+
+        TextView algemene_info = (TextView) root.findViewById(R.id.Algemene_informatie);
+
+        algemene_info(algemene_info);
+
 
         final TextView textView = root.findViewById(R.id.section_label);
         pageViewModel.getText().observe(this, new Observer<String>() {
