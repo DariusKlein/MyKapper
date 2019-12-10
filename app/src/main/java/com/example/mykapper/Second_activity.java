@@ -93,7 +93,7 @@ public class Second_activity extends AppCompatActivity {
 
 
 
-        MyListAdapter adapter = new MyListAdapter(this, maintitle, subtitle, imgid, DocIDandPIC, ListListList);
+        final MyListAdapter adapter = new MyListAdapter(this, maintitle, subtitle, imgid, DocIDandPIC, ListListList);
         list = findViewById(R.id.list);
         list.setAdapter(adapter);
 
@@ -108,8 +108,6 @@ public class Second_activity extends AppCompatActivity {
                         KapperID = i;
 
                         Newpage = "Kapsalon_algemeen";
-                        list.setOnItemClickListener(null);
-
 
                         Open_activity();
 
