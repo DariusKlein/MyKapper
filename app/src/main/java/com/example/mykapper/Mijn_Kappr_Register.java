@@ -4,10 +4,12 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -19,42 +21,62 @@ import androidx.appcompat.widget.Toolbar;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Random;
+
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+
+import static com.example.mykapper.MainActivity.Newpage;
 
 
 public class Mijn_Kappr_Register extends AppCompatActivity implements View.OnClickListener {
 
     static boolean privacy_boolean;
+
     static String Naam;
     static String Email;
     static String Wachtwoord;
 
     private Button Register;
+
     private EditText Naam_input;
     private EditText Email_input;
     private EditText Wachtwoord_input;
+
     private CheckBox privacy;
+
     private FirebaseAuth mAuth;
+
     private String verify;
+
     private ProgressDialog message;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mijn__kappr_register);
-        Toolbar Toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar Toolbar =  findViewById(R.id.toolbar);
         setSupportActionBar(Toolbar);
 
         Register = findViewById(R.id.Register);
+        Register.setOnClickListener(this);
+
+        privacy = findViewById(R.id.privicy);
+        privacy.setOnClickListener(this);
+
         Naam_input = findViewById(R.id.Naam_input);
         Email_input = findViewById(R.id.Email_input);
         Wachtwoord_input = findViewById(R.id.Wachtwoord_input);
-        privacy = (CheckBox)findViewById(R.id.privicy);
-        Register.setOnClickListener(this);
-        privacy.setOnClickListener(this);
 
         message = new ProgressDialog(this);
+
         mAuth = FirebaseAuth.getInstance();
 
     }
@@ -70,60 +92,27 @@ public class Mijn_Kappr_Register extends AppCompatActivity implements View.OnCli
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+
         switch (item.getItemId()) {
             case android.R.id.home:
-                OpenMain();
-                break;
-            case R.id.item3:
-
+                Newpage = "MainActivity";
+                Open_activity();
                 break;
             case R.id.subitem1:
-
-                OpenSettings();
-
+                Newpage = "settings";
+                Open_activity();
                 break;
             case R.id.subitem2:
-
-                OpenMijn_kappr_login();
-
+                Newpage = "Mijn_Kappr_login";
+                Open_activity();
                 break;
             case R.id.subitem3:
-
-                OpenDatabase_test();
-
+                Newpage = "Database_Test";
+                Open_activity();
                 break;
         }
         return super.onOptionsItemSelected(item);
     }
-    public void OpenMijnkappr() {
-        Intent intent = new Intent(this, MijnKappr.class);
-        startActivity(intent);
-
-    }
-    public void OpenMain() {
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
-
-    }
-
-    public void OpenMijn_kappr_login() {
-        Intent intent = new Intent(this, Mijn_Kappr_login.class);
-        startActivity(intent);
-
-    }
-
-    public void OpenSettings() {
-        Intent intent = new Intent(this, SettingsActivity.class);
-        startActivity(intent);
-
-    }
-
-    public void OpenDatabase_test() {
-        Intent intent = new Intent(this, database_test.class);
-        startActivity(intent);
-
-    }
-
 
     @Override
     public void onClick(View v)
@@ -136,7 +125,6 @@ public class Mijn_Kappr_Register extends AppCompatActivity implements View.OnCli
             case R.id.Register:
                 userRegister();
 
-
                 break;
             case R.id.privicy:
                 if(privacy.isChecked())
@@ -147,14 +135,6 @@ public class Mijn_Kappr_Register extends AppCompatActivity implements View.OnCli
 
         }
     }
-
-
-
-    //todo
-    //todo
-    //todo
-
-
 
     private void userRegister(){
 
@@ -182,7 +162,7 @@ public class Mijn_Kappr_Register extends AppCompatActivity implements View.OnCli
                             if(task.isSuccessful()){
                                 Toast.makeText(Mijn_Kappr_Register.this, "Successful Registration", Toast.LENGTH_SHORT).show();
                                 message.hide();
-                                OpenMijn_kappr_login();
+                                add_user_database();
                             }
                             if(!task.isSuccessful()){
                                 Toast.makeText(Mijn_Kappr_Register.this, "Failed Registration", Toast.LENGTH_SHORT).show();
@@ -198,5 +178,45 @@ public class Mijn_Kappr_Register extends AppCompatActivity implements View.OnCli
             return;
         }
 
+    }
+public void add_user_database(){
+
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+    Map<String, Object> Test = new HashMap<>();
+        Test.put("Name", Naam);
+        Test.put("Email", Email);
+
+
+
+    Random randomGenerator = new Random();
+    final String MyNextDocID = (Email);
+
+    DocumentReference docRef = db.collection("Users").document(MyNextDocID);
+
+
+        docRef.set(Test);
+
+    DocumentReference docRef2 = db.collection("Users").document(MyNextDocID);
+        docRef2.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+        @Override
+        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+            if (task.isSuccessful()) {
+                DocumentSnapshot doc = task.getResult();
+                Newpage = "Mijn_Kappr_login";
+                Open_activity();
+
+            }
+        }
+
+    });
+}
+    public void Open_activity(){
+        Intent intent = new Intent(this, Functions.class);
+        this.startActivity(intent);
+    }
+    public void onBackPressed() {
+        Newpage = "MainActivity";
+        Open_activity();
     }
 }

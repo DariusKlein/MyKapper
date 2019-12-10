@@ -9,14 +9,24 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.List;
+import java.util.TreeMap;
+
+
+import java.util.ArrayList;
+
 class MyListAdapter extends ArrayAdapter<String> {
 
     private final Activity context;
-    private final String[] maintitle;
-    private final String[] subtitle;
-    private final Integer[] imgid;
+    private final ArrayList<String> maintitle;
+    private final ArrayList<String> subtitle;
+    private final ArrayList<Integer> imgid;
+    TreeMap<Float, Integer> DocIDandPIC;
+    TreeMap<Float, String> ListListList;
 
-    public MyListAdapter(Activity context, String[] maintitle,String[] subtitle, Integer[] imgid) {
+    public MyListAdapter(Activity context, ArrayList<String> maintitle, ArrayList<String> subtitle, ArrayList<Integer> imgid,
+                         TreeMap<Float, Integer> DocIDandPIC, TreeMap<Float, String> ListListList) {
+
         super(context, R.layout.mylist, maintitle);
 
 
@@ -24,6 +34,9 @@ class MyListAdapter extends ArrayAdapter<String> {
         this.maintitle=maintitle;
         this.subtitle=subtitle;
         this.imgid=imgid;
+        this.DocIDandPIC = DocIDandPIC;
+        this.ListListList = ListListList;
+
 
     }
 
@@ -35,11 +48,23 @@ class MyListAdapter extends ArrayAdapter<String> {
         ImageView imageView = (ImageView) rowView.findViewById(R.id.icon);
         TextView subtitleText = (TextView) rowView.findViewById(R.id.subtitle);
 
-        titleText.setText(maintitle[position]);
-        imageView.setImageResource(imgid[position]);
-        subtitleText.setText(subtitle[position]); //TODO systeem om goede images voor kappers te kiezen
+
+        List<String> Title = new ArrayList<>();
+        Title.addAll((ListListList.values()));
+
+        List<Integer> Image = new ArrayList<>();
+        Image.addAll((DocIDandPIC.values()));
+
+        List<Float> Afstand = new ArrayList<>();
+        Afstand.addAll((ListListList.keySet()));
+
+
+
+        titleText.setText(maintitle.get(position));
+        imageView.setImageResource(imgid.get(position));
+        subtitleText.setText((Afstand.get(position) + " KM"));
 
         return rowView;
 
-    };
+    }
 }

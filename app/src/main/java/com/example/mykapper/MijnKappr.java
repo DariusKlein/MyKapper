@@ -4,35 +4,40 @@ package com.example.mykapper;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
+import androidx.core.app.ActivityCompat;
 import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.tabs.TabLayout;
+import static com.example.mykapper.MainActivity.Newpage;
 
 
 public class MijnKappr extends AppCompatActivity {
 
-
+    public int YourRequestCode = 1;
 
     @Override
-    public boolean onCreateOptionsMenu (Menu menu) {
+    public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.screen_2_menu, menu);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("Kapsalons");
         return true;
     }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mijn_kappr);
-        Toolbar Toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar Toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(Toolbar);
         TabsPagerAdapter tabsPagerAdapter = new TabsPagerAdapter(this, getSupportFragmentManager());
 
@@ -42,64 +47,50 @@ public class MijnKappr extends AppCompatActivity {
         TabLayout tabs = findViewById(R.id.tabs);
         tabs.setupWithViewPager(viewPager);
 
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED &&
+                ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
 
 
-
-
+        }
+        else{
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION},YourRequestCode);
+        }
     }
+
+
+
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+
         switch (item.getItemId()) {
             case android.R.id.home:
-                OpenMain();
-                break;
-            case R.id.item3:
-
+                Newpage = "MainActivity";
+                Open_activity();
                 break;
             case R.id.subitem1:
-
-                OpenSettings();
-
+                Newpage = "settings";
+                Open_activity();
                 break;
             case R.id.subitem2:
-
-                OpenMijnkappr();
-
+                Newpage = "Mijn_Kappr_login";
+                Open_activity();
                 break;
             case R.id.subitem3:
-
-                OpenDatabase_test();
-
+                Newpage = "Database_Test";
+                Open_activity();
                 break;
         }
         return super.onOptionsItemSelected(item);
     }
 
-    public void OpenDatabase_test() {
-        Intent intent = new Intent(this, database_test.class);
-        startActivity(intent);
-
+        public void Open_activity () {
+            Intent intent = new Intent(this, Functions.class);
+            this.startActivity(intent);
+        }
+    public void onBackPressed() {
+        Newpage = "MainActivity";
+        Open_activity();
     }
-
-
-    public void OpenMijnkappr() {
-        Intent intent = new Intent(this, MijnKappr.class);
-        startActivity(intent);
-
-    }
-
-    public void OpenSettings() {
-        Intent intent = new Intent(this, SettingsActivity.class);
-        startActivity(intent);
-
-    }
-
-    public void OpenMain() {
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
-
-    }
-
-
 
 }

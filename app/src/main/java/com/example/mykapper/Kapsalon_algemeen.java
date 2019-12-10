@@ -1,29 +1,29 @@
 package com.example.mykapper;
 
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 import androidx.viewpager.widget.ViewPager;
 
-
 import com.google.android.material.tabs.TabLayout;
+
+import static com.example.mykapper.MainActivity.Newpage;
 
 import static com.example.mykapper.R.id.Tabs1;
 import static com.example.mykapper.R.id.toolbar;
 import static com.example.mykapper.R.id.view_pager;
+
 import static com.example.mykapper.R.layout.activity_kapsalon_algemeen;
 
 
 public class Kapsalon_algemeen extends AppCompatActivity {
-
 
 
     @Override
@@ -38,73 +38,48 @@ public class Kapsalon_algemeen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(activity_kapsalon_algemeen);
-        Toolbar Toolbar = (Toolbar) findViewById(toolbar);
+        Toolbar Toolbar = findViewById(toolbar);
         setSupportActionBar(Toolbar);
         TabsPagerAdapter2 TabsPagerAdapter = new TabsPagerAdapter2(this, getSupportFragmentManager());
         ViewPager viewPager = findViewById(view_pager);
         viewPager.setAdapter(TabsPagerAdapter);
 
+
+
         TabLayout tabs = findViewById(Tabs1);
         tabs.setupWithViewPager(viewPager);
-
-
-
-
-
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+
         switch (item.getItemId()) {
             case android.R.id.home:
-                OpenMain();
-                break;
-            case R.id.item3:
-
+                Newpage = "MainActivity";
+                Open_activity();
                 break;
             case R.id.subitem1:
-
-                OpenSettings();
-
+                Newpage = "settings";
+                Open_activity();
                 break;
             case R.id.subitem2:
-
-                OpenMijnKappr();
-
+                Newpage = "Mijn_Kappr_login";
+                Open_activity();
                 break;
             case R.id.subitem3:
-
-                OpenDatabase_test();
-
+                Newpage = "Database_Test";
+                Open_activity();
                 break;
         }
         return super.onOptionsItemSelected(item);
     }
 
-    public void OpenDatabase_test() {
-        Intent intent = new Intent(this, database_test.class);
-        startActivity(intent);
-
+    public void Open_activity() {
+        Intent intent = new Intent(this, Functions.class);
+        this.startActivity(intent);
     }
-
-
-    public void OpenMijnKappr() {
-        Intent intent = new Intent(this, Mijn_Kappr_login.class);
-        startActivity(intent);
-
+    public void onBackPressed() {
+        Newpage = "MainActivity";
+        Open_activity();
     }
-
-    public void OpenSettings() {
-        Intent intent = new Intent(this, SettingsActivity.class);
-        startActivity(intent);
-
-    }
-
-    public void OpenMain() {
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
-
-    }
-
-
-
 }

@@ -1,31 +1,51 @@
 package com.example.mykapper;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.os.Bundle;
-
+import android.Manifest;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.RatingBar.OnRatingBarChangeListener;
 import android.widget.RatingBar;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import java.util.ArrayList;
+
 
 public class MainActivity extends AppCompatActivity
     implements View.OnClickListener {
+
+
+    static Integer[] imagesList = {R.drawable.kapper_1, R.drawable.kapper_2, R.drawable.kapper_3, R.drawable.kapper_4,
+                                   R.drawable.kapper_5, R.drawable.kapper_6, R.drawable.kapper_7, R.drawable.kapper_8};
+
+    public int YourRequestCode = 1;
+
     private Button Button;
     private Button SettingButton;
     private Button My_MyKappr;
-    private RatingBar StartRating;;
-    static float Rating;
+
+    private RatingBar StartRating;
+
     private FirebaseAuth mAuth;
+
+    static ArrayList ImageList;
+
+    static float Rating;
+
+    static String Newpage;
+
+
     static boolean loggedIn = false;
 
+
+    String preferences_name = "isFirstTime";
 
 
     @Override
@@ -36,13 +56,37 @@ public class MainActivity extends AppCompatActivity
         mAuth = FirebaseAuth.getInstance();
 
         Button = findViewById(R.id.Zoeken);
-        SettingButton = findViewById(R.id.Instellingen);
-        My_MyKappr = findViewById(R.id.MyAccount);
-        SettingButton.setOnClickListener(this);
         Button.setOnClickListener(this);
+
+        SettingButton = findViewById(R.id.Instellingen);
+        SettingButton.setOnClickListener(this);
+
+        My_MyKappr = findViewById(R.id.MyAccount);
         My_MyKappr.setOnClickListener(this);
+
+        mAuth = FirebaseAuth.getInstance();
+
+        firstTime();
+
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED &&
+                ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+        }
+        else{
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION},YourRequestCode);
+        }
         }
 
+
+
+    public  void  firstTime(){
+
+        SharedPreferences sharedTime = getSharedPreferences(preferences_name,0);
+        if (sharedTime.getBoolean("firstTime",true))
+        {
+            sharedTime.edit().putBoolean("firstTime",false).apply();
+        }
+        else FirebaseAuth.getInstance().signOut();
+    }
 
     @Override
     public void onStart() {
@@ -50,57 +94,46 @@ public class MainActivity extends AppCompatActivity
 
         FirebaseUser currentUser = mAuth.getCurrentUser();
 
-
-
-
         System.out.print(currentUser);
-
-
     }
 
 
     public void onClick(View view) {
-        StartRating = (RatingBar) findViewById(R.id.StartRating);
-
+        StartRating = findViewById(R.id.StartRating);
 
         Rating = StartRating.getRating();
+
         System.out.println(Rating);
 
         switch (view.getId()) {
             case R.id.Instellingen:
-                Opensettings ();
+                Newpage = "settings";
+                Open_activity();
                 break;
             case R.id.MyAccount:
-                OpenMijn_Kappr_login ();
+                Newpage = "Mijn_Kappr_login";
+                Open_activity();
                 break;
             case R.id.Zoeken:
-                Opensecond_activity();
+                Newpage = "Second_activity";
+                Open_activity();
                 break;
 
         }
     }
 
-        public void Opensecond_activity () {
-            Intent intent = new Intent(this, Second_activity.class);
-            startActivity(intent);
-        }
-
-        public void Opensettings () {
-            Intent intent = new Intent(this, SettingsActivity.class);
-            startActivity(intent);
-        }
-        public void OpenMijn_Kappr_login () {
-            Intent intent = new Intent(this, Mijn_Kappr_login.class);
-            startActivity(intent);
-        }
-
-
-
+    public void Open_activity(){
+        Intent intent = new Intent(this, Functions.class);
+        this.startActivity(intent);
+    }
+    @Override
+    public void onBackPressed() {
+        Newpage = "MainActivity";
+        Open_activity();
+    }
     }
 
 
-//todo Dinsdag:maak front page mooi
-//todo Dinsdag: todo mylistadapt en second_activity met globale variablen
-//todo
-//todo
-//todo
+
+
+
