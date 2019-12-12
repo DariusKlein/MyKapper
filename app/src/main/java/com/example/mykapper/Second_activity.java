@@ -107,10 +107,8 @@ public class Second_activity extends AppCompatActivity {
 
                         KapperID = i;
 
-                        Newpage = "Kapsalon_algemeen";
-
-                        Open_activity();
-
+                        Intent Kapsalon_algemeen = new Intent(getBaseContext(), Kapsalon_algemeen.class);
+                        Open_activity(Kapsalon_algemeen);
                     }
                 }
             }
@@ -127,35 +125,36 @@ public class Second_activity extends AppCompatActivity {
         return true;
     }
 
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
         switch (item.getItemId()) {
             case android.R.id.home:
-                Newpage = "MainActivity";
-                Open_activity();
+                Intent intent = new Intent(this, MainActivity.class);
+                Open_activity(intent);
                 break;
             case R.id.subitem1:
-                Newpage = "settings";
-                Open_activity();
+                Intent SettingsActivity = new Intent(this, SettingsActivity.class);
+                Open_activity(SettingsActivity);
                 break;
             case R.id.subitem2:
-                Newpage = "Mijn_Kappr_login";
-                Open_activity();
+                Intent Mijn_Kappr_login = new Intent(this, Mijn_Kappr_login.class);
+                Open_activity(Mijn_Kappr_login);
                 break;
             case R.id.subitem3:
-                Newpage = "Database_Test";
-                Open_activity();
+                Intent database_test = new Intent(this, database_test.class);
+                Open_activity(database_test);
                 break;
         }
         return super.onOptionsItemSelected(item);
     }
 
 
-    public void Open_activity() {
-        Intent intent = new Intent(this, Functions.class);
+    public void Open_activity(Intent intent) {
         this.startActivity(intent);
     }
+
 
     public void Supersetup() {
 
@@ -228,9 +227,5 @@ public class Second_activity extends AppCompatActivity {
                 });
     }
 
-    public void onBackPressed() {
-        Newpage = "MainActivity";
-        Open_activity();
-    }
 
 }

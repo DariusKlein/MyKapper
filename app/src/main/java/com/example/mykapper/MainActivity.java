@@ -107,30 +107,26 @@ public class MainActivity extends AppCompatActivity
 
         switch (view.getId()) {
             case R.id.Instellingen:
-                Newpage = "settings";
-                Open_activity();
+                Intent SettingsActivity = new Intent(this, SettingsActivity.class);
+                Open_activity(SettingsActivity);
                 break;
             case R.id.MyAccount:
-                Newpage = "Mijn_Kappr_login";
-                Open_activity();
+                Intent Mijn_Kappr_login = new Intent(this, Mijn_Kappr_login.class);
+                Open_activity(Mijn_Kappr_login);
                 break;
             case R.id.Zoeken:
-                Newpage = "Second_activity";
-                Open_activity();
+                Intent Second_activity = new Intent(this, Second_activity.class);
+                Open_activity(Second_activity);
                 break;
 
         }
     }
 
-    public void Open_activity(){
-        Intent intent = new Intent(this, Functions.class);
+    public void Open_activity(Intent intent) {
         this.startActivity(intent);
     }
-    @Override
-    public void onBackPressed() {
-        Newpage = "MainActivity";
-        Open_activity();
-    }
+
+
     }
 
 
