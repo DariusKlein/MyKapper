@@ -14,6 +14,8 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.tabs.TabLayout;
 
+import java.nio.charset.MalformedInputException;
+
 import static com.example.mykapper.MainActivity.Newpage;
 
 import static com.example.mykapper.R.id.Tabs1;
@@ -77,4 +79,9 @@ public class Kapsalon_algemeen extends AppCompatActivity {
     public void Open_activity(Intent intent) {
         this.startActivity(intent);
     }
+    @Override
+    public void onBackPressed() {
+        Intent database_test = new Intent(this, MainActivity.class);
+        Open_activity(database_test);    }
 }
+

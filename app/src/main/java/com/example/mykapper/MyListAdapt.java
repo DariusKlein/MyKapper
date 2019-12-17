@@ -5,9 +5,13 @@ import android.app.Activity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Adapter;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+
 
 import java.util.List;
 import java.util.TreeMap;
@@ -23,11 +27,18 @@ class MyListAdapter extends ArrayAdapter<String> {
     private final ArrayList<Integer> imgid;
     TreeMap<Float, Integer> DocIDandPIC;
     TreeMap<Float, String> ListListList;
+    static List<String> Title = new ArrayList<>();
+    List<Integer> Image = new ArrayList<>();
+    List<Float> Afstand = new ArrayList<>();
+    static View rowView = null;
+    static LayoutInflater inflater = null;
+
 
     public MyListAdapter(Activity context, ArrayList<String> maintitle, ArrayList<String> subtitle, ArrayList<Integer> imgid,
                          TreeMap<Float, Integer> DocIDandPIC, TreeMap<Float, String> ListListList) {
 
         super(context, R.layout.mylist, maintitle);
+
 
 
         this.context=context;
@@ -37,32 +48,37 @@ class MyListAdapter extends ArrayAdapter<String> {
         this.DocIDandPIC = DocIDandPIC;
         this.ListListList = ListListList;
 
-
-    }
-
-    public View getView(int position,View view,ViewGroup parent) {
-        LayoutInflater inflater=context.getLayoutInflater();
-        View rowView=inflater.inflate(R.layout.mylist, null,true);
-
-        TextView titleText = (TextView) rowView.findViewById(R.id.title);
-        ImageView imageView = (ImageView) rowView.findViewById(R.id.icon);
-        TextView subtitleText = (TextView) rowView.findViewById(R.id.subtitle);
-
-
-        List<String> Title = new ArrayList<>();
+        Title.removeAll(Title);
         Title.addAll((ListListList.values()));
-
-        List<Integer> Image = new ArrayList<>();
+        Image.removeAll(Image);
         Image.addAll((DocIDandPIC.values()));
-
-        List<Float> Afstand = new ArrayList<>();
+        Afstand.removeAll(Afstand);
         Afstand.addAll((ListListList.keySet()));
 
 
 
-        titleText.setText(maintitle.get(position));
-        imageView.setImageResource(imgid.get(position));
-        subtitleText.setText((Afstand.get(position) + " KM"));
+
+    }
+    @NonNull
+    public View getView(int position,View view,ViewGroup parent) {
+
+
+
+
+            inflater = context.getLayoutInflater();
+            rowView = inflater.inflate(R.layout.mylist, null, true);
+
+
+            TextView titleText = (TextView) rowView.findViewById(R.id.title);
+            ImageView imageView = (ImageView) rowView.findViewById(R.id.icon);
+            TextView subtitleText = (TextView) rowView.findViewById(R.id.subtitle);
+
+        if (Title.size() > position) {
+
+            titleText.setText(Title.get(position));
+            imageView.setImageResource(Image.get(position));
+            subtitleText.setText((Afstand.get(position) + "KM"));
+        }
 
         return rowView;
 

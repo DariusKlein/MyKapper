@@ -17,6 +17,9 @@ import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
 
+import static com.example.mykapper.MyListAdapter.inflater;
+import static com.example.mykapper.MyListAdapter.rowView;
+
 
 public class MainActivity extends AppCompatActivity
     implements View.OnClickListener {
@@ -115,6 +118,9 @@ public class MainActivity extends AppCompatActivity
                 Open_activity(Mijn_Kappr_login);
                 break;
             case R.id.Zoeken:
+                rowView = null;
+                inflater = null;
+
                 Intent Second_activity = new Intent(this, Second_activity.class);
                 Open_activity(Second_activity);
                 break;

@@ -22,6 +22,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import org.w3c.dom.Text;
 
+import static com.example.mykapper.MyListAdapter.Title;
 import static com.example.mykapper.Second_activity.KapperID;
 import static com.example.mykapper.Second_activity.maintitle;
 
@@ -53,7 +54,7 @@ public class info extends Fragment  {
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-        DocumentReference docRef = db.collection("Kapsalons").document(maintitle.get(KapperID));
+        DocumentReference docRef = db.collection("Kapsalons").document(Title.get(KapperID));
 
         docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override

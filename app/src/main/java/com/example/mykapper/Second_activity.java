@@ -44,6 +44,7 @@ import java.util.TreeMap;
 import static com.example.mykapper.MainActivity.Rating;
 import static com.example.mykapper.MainActivity.Newpage;
 import static com.example.mykapper.MainActivity.imagesList;
+import static com.example.mykapper.MyListAdapter.rowView;
 
 
 public class Second_activity extends AppCompatActivity {
@@ -71,14 +72,19 @@ public class Second_activity extends AppCompatActivity {
 
     static int KapperID;
 
+    static MyListAdapter adapter;
+
 
     ListView list;
+
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_second_activity);
+
+        list = null;
 
         mStorageRef = FirebaseStorage.getInstance().getReference();
 
@@ -91,13 +97,16 @@ public class Second_activity extends AppCompatActivity {
 
     public void Setuplist() {
 
+        rowView = null;
+        list = null;
 
 
-        final MyListAdapter adapter = new MyListAdapter(this, maintitle, subtitle, imgid, DocIDandPIC, ListListList);
+        adapter = new MyListAdapter(this, maintitle, subtitle, imgid, DocIDandPIC, ListListList);
         list = findViewById(R.id.list);
         list.setAdapter(adapter);
 
-            list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -128,7 +137,6 @@ public class Second_activity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
         switch (item.getItemId()) {
             case android.R.id.home:
                 Intent intent = new Intent(this, MainActivity.class);
@@ -152,9 +160,14 @@ public class Second_activity extends AppCompatActivity {
 
 
     public void Open_activity(Intent intent) {
+        adapter.clear();
         this.startActivity(intent);
     }
-
+    @Override
+    public void onBackPressed() {
+        adapter.clear();
+        super.onBackPressed();
+    }
 
     public void Supersetup() {
 
@@ -180,6 +193,8 @@ public class Second_activity extends AppCompatActivity {
                             //loading.setText("");
 
                             int documentcount = 0;
+                            ListListList.clear();
+                            DocIDandPIC.clear();
 
                             for (QueryDocumentSnapshot document : task.getResult()) {
 
