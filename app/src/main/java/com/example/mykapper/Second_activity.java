@@ -32,6 +32,8 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 
+import org.w3c.dom.Document;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -61,6 +63,7 @@ public class Second_activity extends AppCompatActivity {
     private double RatingDB;
     private volatile boolean complete = false;
     public float distanceInKM;
+    public float distanceInMeters;
     private FusedLocationProviderClient fusedLocationClient;
     private StorageReference mStorageRef;
 
@@ -71,6 +74,8 @@ public class Second_activity extends AppCompatActivity {
     final TreeMap<Float, String> ListListList = new TreeMap<>();
 
     static int KapperID;
+    float i = 0;
+    static boolean GPS = false;
 
     static MyListAdapter adapter;
 
@@ -171,11 +176,13 @@ public class Second_activity extends AppCompatActivity {
 
     public void Supersetup() {
 
+
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
         fusedLocationClient.getLastLocation()
+
                 .addOnSuccessListener(this, new OnSuccessListener<Location>() {
                     @Override
                     public void onSuccess(Location location) {
@@ -213,13 +220,14 @@ public class Second_activity extends AppCompatActivity {
                                 loc2.setLatitude(lat2);
                                 loc2.setLongitude(lon2);
 
-                                float distanceInMeters = loc1.distanceTo(loc2);
+                                if ( loc1 != null) {
 
-                                if (distanceInMeters <= 1000) {
+                                    distanceInMeters = loc1.distanceTo(loc2);
 
-                                    distanceInKM = distanceInMeters;
-                                } else {
                                     distanceInKM = (distanceInMeters / 1000);
+
+                                }else{
+                                    distanceInKM = 0;
                                 }
 
                                 maintitle.add(DocID);
@@ -227,13 +235,19 @@ public class Second_activity extends AppCompatActivity {
                                 subtitle.add(StringInKM + " KM");
                                 imgid.add(imagesList[DocPic]);
 
-
-                                ListListList.put(distanceInKM, DocID);
-
-                                DocIDandPIC.put(distanceInKM, imagesList[DocPic]);
+                                if (distanceInKM > 0) {
+                                    ListListList.put(distanceInKM, DocID);
+                                    DocIDandPIC.put(distanceInKM, imagesList[DocPic]);
+                                    GPS = true;
+                                }else{
+                                    i = i +1;
+                                    ListListList.put(i, DocID);
+                                    DocIDandPIC.put(i, imagesList[DocPic]);
+                                    GPS = false;
+                                }
                             }
 
-
+                            i = 0;
                             Setuplist();
                         }
 

@@ -19,6 +19,8 @@ import java.util.TreeMap;
 
 import java.util.ArrayList;
 
+import static com.example.mykapper.Second_activity.GPS;
+
 class MyListAdapter extends ArrayAdapter<String> {
 
     private final Activity context;
@@ -77,7 +79,11 @@ class MyListAdapter extends ArrayAdapter<String> {
 
             titleText.setText(Title.get(position));
             imageView.setImageResource(Image.get(position));
-            subtitleText.setText((Afstand.get(position) + "KM"));
+            if (GPS == true) {
+                subtitleText.setText((Afstand.get(position) + "KM"));
+            }else{
+                subtitleText.setText(("Location ERROR: Afstand niet berekenbaar"));
+            }
         }
 
         return rowView;
