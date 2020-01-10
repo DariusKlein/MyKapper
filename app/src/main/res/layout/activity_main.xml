@@ -52,7 +52,7 @@
     <Button
         android:id="@+id/Zoeken"
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="530dp"
         android:layout_marginEnd="8dp"
@@ -88,7 +88,7 @@
         android:layout_marginTop="550dp"
         android:layout_marginEnd="120dp"
         android:layout_marginBottom="250dp"
-        app:layout_constraintBottom_toBottomOf="@+id/Zoeken"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.55"
         app:layout_constraintStart_toStartOf="parent"

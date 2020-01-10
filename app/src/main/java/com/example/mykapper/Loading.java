@@ -110,9 +110,6 @@ public class Loading extends AppCompatActivity {
 
                 });
     }
-    public void Open_activity(){
-        Intent intent = new Intent(this, Functions.class);
-        this.startActivity(intent);
-    }
+
     }
 

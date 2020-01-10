@@ -32,6 +32,8 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 
+import org.w3c.dom.Document;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -44,6 +46,7 @@ import java.util.TreeMap;
 import static com.example.mykapper.MainActivity.Rating;
 import static com.example.mykapper.MainActivity.Newpage;
 import static com.example.mykapper.MainActivity.imagesList;
+import static com.example.mykapper.MyListAdapter.rowView;
 
 
 public class Second_activity extends AppCompatActivity {
@@ -60,6 +63,7 @@ public class Second_activity extends AppCompatActivity {
     private double RatingDB;
     private volatile boolean complete = false;
     public float distanceInKM;
+    public float distanceInMeters;
     private FusedLocationProviderClient fusedLocationClient;
     private StorageReference mStorageRef;
 
@@ -70,15 +74,22 @@ public class Second_activity extends AppCompatActivity {
     final TreeMap<Float, String> ListListList = new TreeMap<>();
 
     static int KapperID;
+    float i = 0;
+    static boolean GPS = false;
+
+    static MyListAdapter adapter;
 
 
     ListView list;
+
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_second_activity);
+
+        list = null;
 
         mStorageRef = FirebaseStorage.getInstance().getReference();
 
@@ -91,13 +102,16 @@ public class Second_activity extends AppCompatActivity {
 
     public void Setuplist() {
 
+        rowView = null;
+        list = null;
 
 
-        final MyListAdapter adapter = new MyListAdapter(this, maintitle, subtitle, imgid, DocIDandPIC, ListListList);
+        adapter = new MyListAdapter(this, maintitle, subtitle, imgid, DocIDandPIC, ListListList);
         list = findViewById(R.id.list);
         list.setAdapter(adapter);
 
-            list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -107,10 +121,8 @@ public class Second_activity extends AppCompatActivity {
 
                         KapperID = i;
 
-                        Newpage = "Kapsalon_algemeen";
-
-                        Open_activity();
-
+                        Intent Kapsalon_algemeen = new Intent(getBaseContext(), Kapsalon_algemeen.class);
+                        Open_activity(Kapsalon_algemeen);
                     }
                 }
             }
@@ -127,43 +139,50 @@ public class Second_activity extends AppCompatActivity {
         return true;
     }
 
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
         switch (item.getItemId()) {
             case android.R.id.home:
-                Newpage = "MainActivity";
-                Open_activity();
+                Intent intent = new Intent(this, MainActivity.class);
+                Open_activity(intent);
                 break;
             case R.id.subitem1:
-                Newpage = "settings";
-                Open_activity();
+                Intent SettingsActivity = new Intent(this, SettingsActivity.class);
+                Open_activity(SettingsActivity);
                 break;
             case R.id.subitem2:
-                Newpage = "Mijn_Kappr_login";
-                Open_activity();
+                Intent Mijn_Kappr_login = new Intent(this, Mijn_Kappr_login.class);
+                Open_activity(Mijn_Kappr_login);
                 break;
             case R.id.subitem3:
-                Newpage = "Database_Test";
-                Open_activity();
+                Intent database_test = new Intent(this, database_test.class);
+                Open_activity(database_test);
                 break;
         }
         return super.onOptionsItemSelected(item);
     }
 
 
-    public void Open_activity() {
-        Intent intent = new Intent(this, Functions.class);
+    public void Open_activity(Intent intent) {
+        adapter.clear();
         this.startActivity(intent);
+    }
+    @Override
+    public void onBackPressed() {
+        adapter.clear();
+        super.onBackPressed();
     }
 
     public void Supersetup() {
+
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
         fusedLocationClient.getLastLocation()
+
                 .addOnSuccessListener(this, new OnSuccessListener<Location>() {
                     @Override
                     public void onSuccess(Location location) {
@@ -181,6 +200,8 @@ public class Second_activity extends AppCompatActivity {
                             //loading.setText("");
 
                             int documentcount = 0;
+                            ListListList.clear();
+                            DocIDandPIC.clear();
 
                             for (QueryDocumentSnapshot document : task.getResult()) {
 
@@ -199,13 +220,14 @@ public class Second_activity extends AppCompatActivity {
                                 loc2.setLatitude(lat2);
                                 loc2.setLongitude(lon2);
 
-                                float distanceInMeters = loc1.distanceTo(loc2);
+                                if ( loc1 != null) {
 
-                                if (distanceInMeters <= 1000) {
+                                    distanceInMeters = loc1.distanceTo(loc2);
 
-                                    distanceInKM = distanceInMeters;
-                                } else {
                                     distanceInKM = (distanceInMeters / 1000);
+
+                                }else{
+                                    distanceInKM = 0;
                                 }
 
                                 maintitle.add(DocID);
@@ -213,13 +235,19 @@ public class Second_activity extends AppCompatActivity {
                                 subtitle.add(StringInKM + " KM");
                                 imgid.add(imagesList[DocPic]);
 
-
-                                ListListList.put(distanceInKM, DocID);
-
-                                DocIDandPIC.put(distanceInKM, imagesList[DocPic]);
+                                if (distanceInKM > 0) {
+                                    ListListList.put(distanceInKM, DocID);
+                                    DocIDandPIC.put(distanceInKM, imagesList[DocPic]);
+                                    GPS = true;
+                                }else{
+                                    i = i +1;
+                                    ListListList.put(i, DocID);
+                                    DocIDandPIC.put(i, imagesList[DocPic]);
+                                    GPS = false;
+                                }
                             }
 
-
+                            i = 0;
                             Setuplist();
                         }
 
@@ -228,9 +256,5 @@ public class Second_activity extends AppCompatActivity {
                 });
     }
 
-    public void onBackPressed() {
-        Newpage = "MainActivity";
-        Open_activity();
-    }
 
 }

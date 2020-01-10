@@ -13,7 +13,7 @@ public class PageViewModel2 extends ViewModel {
     private LiveData<String> mText = Transformations.map(mTitle, new Function<String, String>() {
         @Override
         public String apply(String input) {
-            return "coming soon with " + input;
+            return "";
         }
     });
 

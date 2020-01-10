@@ -21,3 +21,4 @@
 #-renamesourcefileattribute SourceFile
 -keepattributes Signature
 -keepattributes *Annotation*
+-keep class androidx.core.app.CoreComponentFactory { *; }

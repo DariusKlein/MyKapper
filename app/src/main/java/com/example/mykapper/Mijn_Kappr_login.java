@@ -1,5 +1,6 @@
 package com.example.mykapper;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -71,8 +72,8 @@ public class Mijn_Kappr_login extends AppCompatActivity implements View.OnClickL
         mAuth = FirebaseAuth.getInstance();
 
         if (loggedIn == true) {
-            Newpage = "MijnKappr";
-            Open_activity();
+            Intent MijnKappr = new Intent(this, MijnKappr.class);
+            Open_activity(MijnKappr);
         }
 
 
@@ -92,20 +93,20 @@ public class Mijn_Kappr_login extends AppCompatActivity implements View.OnClickL
 
         switch (item.getItemId()) {
             case android.R.id.home:
-                Newpage = "MainActivity";
-                Open_activity();
+                Intent MainActivity = new Intent(this, MainActivity.class);
+                Open_activity(MainActivity);
                 break;
             case R.id.subitem1:
-                Newpage = "settings";
-                Open_activity();
+                Intent SettingsActivity = new Intent(this, SettingsActivity.class);
+                Open_activity(SettingsActivity);
                 break;
             case R.id.subitem2:
-                Newpage = "Mijn_Kappr_login";
-                Open_activity();
+                Intent Mijn_Kappr_login = new Intent(this, Mijn_Kappr_login.class);
+                Open_activity(Mijn_Kappr_login);
                 break;
             case R.id.subitem3:
-                Newpage = "Database_Test";
-                Open_activity();
+                Intent database_test = new Intent(this, database_test.class);
+                Open_activity(database_test);
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -123,8 +124,8 @@ public class Mijn_Kappr_login extends AppCompatActivity implements View.OnClickL
         switch (v.getId()) {
             case R.id.inloggen:
                 if(Email.length() < 5 || Wachtwoord.length() < 5) {
-                    Newpage = "Mijn_Kappr_login";
-                    Open_activity();
+                    Intent Mijn_Kappr_login = new Intent(this, Mijn_Kappr_login.class);
+                    Open_activity(Mijn_Kappr_login);
                 }
                 else
                    signin();
@@ -133,8 +134,8 @@ public class Mijn_Kappr_login extends AppCompatActivity implements View.OnClickL
 
             case R.id.Register_pagina:
 
-                Newpage = "Mijn_Kappr_Register";
-                Open_activity();
+                Intent Mijn_Kappr_Register = new Intent(this, Mijn_Kappr_Register.class);
+                Open_activity(Mijn_Kappr_Register);
 
                 break;
             case R.id.privicy:
@@ -161,8 +162,8 @@ public class Mijn_Kappr_login extends AppCompatActivity implements View.OnClickL
 
                             loggedIn = true;
 
-                            Newpage = "MijnKappr";
-                            Open_activity();
+                            Intent MijnKappr = new Intent(getBaseContext(), MijnKappr.class);
+                            Open_activity(MijnKappr);
 
                         } else {
 
@@ -175,12 +176,7 @@ public class Mijn_Kappr_login extends AppCompatActivity implements View.OnClickL
                 });
 
     }
-    public void Open_activity(){
-        Intent intent = new Intent(this, Functions.class);
+    public void Open_activity(Intent intent) {
         this.startActivity(intent);
-    }
-    public void onBackPressed() {
-        Newpage = "MainActivity";
-        Open_activity();
     }
 }
