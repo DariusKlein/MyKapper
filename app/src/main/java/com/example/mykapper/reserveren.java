@@ -45,6 +45,7 @@ public class reserveren extends Fragment implements View.OnClickListener {
     public Button reservern;
     public Button laadkapper;
     public CalendarView calendar1;
+    static String Tijd_Afspraak;
 
     public reserveren() {
 
@@ -96,7 +97,7 @@ public class reserveren extends Fragment implements View.OnClickListener {
 
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String item = parent.getItemAtPosition(position).toString();
+                Tijd_Afspraak = parent.getItemAtPosition(position).toString();
                 reservern.setVisibility(View.VISIBLE);
             }
 
