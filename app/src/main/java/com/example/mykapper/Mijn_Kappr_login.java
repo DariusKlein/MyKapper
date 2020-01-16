@@ -1,6 +1,5 @@
 package com.example.mykapper;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -25,7 +24,6 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-import static com.example.mykapper.MainActivity.Newpage;
 import static com.example.mykapper.MainActivity.loggedIn;
 
 
@@ -104,10 +102,7 @@ public class Mijn_Kappr_login extends AppCompatActivity implements View.OnClickL
                 Intent Mijn_Kappr_login = new Intent(this, Mijn_Kappr_login.class);
                 Open_activity(Mijn_Kappr_login);
                 break;
-            case R.id.subitem3:
-                Intent database_test = new Intent(this, database_test.class);
-                Open_activity(database_test);
-                break;
+
         }
         return super.onOptionsItemSelected(item);
     }

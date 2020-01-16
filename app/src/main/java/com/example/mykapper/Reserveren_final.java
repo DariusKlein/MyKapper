@@ -19,41 +19,54 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import org.w3c.dom.Text;
+
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
+import static com.example.mykapper.Second_activity.Gekozen_kapper;
+import static com.example.mykapper.reserveren.Afspraak_datum;
 
 
-public class database_test extends AppCompatActivity implements View.OnClickListener {
+public class Reserveren_final extends AppCompatActivity implements View.OnClickListener {
 
-    String MyTestvariable1;
-    String MyTestvariable2;
-    String MyTestvariable3;
+    String NaamSTR;
+    String EmailSTR;
 
-    private Button databasetest;
+    private Button Reserveren;
     private TextView databeseout;
 
-    public EditText databasein1;
-    public EditText databasein2;
-    public EditText databasein3;
+    public EditText Naam;
+    public EditText Email;
+
+    public TextView Naam_text;
+    public TextView Email_text;
+    public TextView Kapper;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_database_test);
+        setContentView(R.layout.reserveren_final);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        databasein1 = findViewById(R.id.databasein1);
-        databasein2 = findViewById(R.id.databasein2);
-        databasein3 = findViewById(R.id.databasein3);
+        Naam = findViewById(R.id.Naam);
+        Email = findViewById(R.id.Email);
 
-        databasetest = findViewById(R.id.databasetest);
+        Naam_text = findViewById(R.id.Naam_text);
+        Email_text = findViewById(R.id.Email_text);
+
+        Reserveren = findViewById(R.id.Reserveren);
         databeseout = findViewById(R.id.databaseout);
 
-        databasetest.setOnClickListener(this);
+        Reserveren.setOnClickListener(this);
+
+        Kapper = findViewById(R.id.Kapper);
+        Kapper.setText(Gekozen_kapper);
+
     }
 
     @Override
@@ -61,27 +74,25 @@ public class database_test extends AppCompatActivity implements View.OnClickList
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-        databasein1.getText();
-        databasein2.getText();
-        databasein3.getText();
-
-        MyTestvariable1 = String.valueOf(databasein1.getText());
-        MyTestvariable2 = String.valueOf(databasein2.getText());
-        MyTestvariable3 = String.valueOf(databasein3.getText());
-
-        Map<String, Object> Test = new HashMap<>();
-        Test.put("Name", MyTestvariable1);
-        Test.put("Email", MyTestvariable2);
-        Test.put("Phone", MyTestvariable3);
 
 
-        Random randomGenerator = new Random();
 
-        final String MyNextDocID = (MyTestvariable1 + MyTestvariable3 +(Calendar.getInstance().get(Calendar.HOUR_OF_DAY))+(randomGenerator.nextInt(98) + 1));
+        NaamSTR = String.valueOf(Naam.getText());
+        EmailSTR = String.valueOf(Email.getText());
+
+
+        Map<String, Object> Afspraak = new HashMap<>();
+        Afspraak.put("Name", NaamSTR);
+        Afspraak.put("Email", EmailSTR);
+        Afspraak.put("Datum",Afspraak_datum);
+
+
+
+        final String MyNextDocID = (EmailSTR +(Calendar.getInstance().get(Calendar.MINUTE)));
 
         DocumentReference docRef = db.collection("Afspraken").document(MyNextDocID);
 
-        docRef.set(Test);
+        docRef.set(Afspraak);
         DocumentReference docRef2 = db.collection("Afspraken").document(MyNextDocID);
         docRef2.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
@@ -93,9 +104,17 @@ public class database_test extends AppCompatActivity implements View.OnClickList
 
                     fields.append("Name: ").append(doc.get("Name"));
                     fields.append("\nEmail: ").append(doc.get("Email"));
-                    fields.append("\nPhone: ").append(doc.get("Phone"));
+                    fields.append("\nDatum: ").append(doc.get("Datum"));
+
 
                     databeseout.setText(fields.toString());
+                    databeseout.setVisibility(View.VISIBLE);
+                    Naam.setVisibility(View.GONE);
+                    Email.setVisibility(View.GONE);
+                    Reserveren.setVisibility(View.GONE);
+                    Naam_text.setVisibility(View.GONE);
+                    Email_text.setVisibility(View.GONE);
+                    Kapper.setVisibility(View.GONE);
 
 
                 }

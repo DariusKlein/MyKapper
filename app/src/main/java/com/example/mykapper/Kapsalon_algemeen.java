@@ -8,15 +8,10 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.TextView;
 
 import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.tabs.TabLayout;
-
-import java.nio.charset.MalformedInputException;
-
-import static com.example.mykapper.MainActivity.Newpage;
 
 import static com.example.mykapper.R.id.Tabs1;
 import static com.example.mykapper.R.id.toolbar;
@@ -50,6 +45,7 @@ public class Kapsalon_algemeen extends AppCompatActivity {
 
         TabLayout tabs = findViewById(Tabs1);
         tabs.setupWithViewPager(viewPager);
+
     }
 
     @Override
@@ -67,10 +63,6 @@ public class Kapsalon_algemeen extends AppCompatActivity {
             case R.id.subitem2:
                 Intent Mijn_Kappr_login = new Intent(this, Mijn_Kappr_login.class);
                 Open_activity(Mijn_Kappr_login);
-                break;
-            case R.id.subitem3:
-                Intent database_test = new Intent(this, database_test.class);
-                Open_activity(database_test);
                 break;
         }
         return super.onOptionsItemSelected(item);

@@ -4,7 +4,7 @@
 
     <item
         android:id="@+id/item3"
-        android:title="Item 3"
+        android:title="Placeholder"
         app:showAsAction="never">
 
         <menu>
@@ -16,9 +16,7 @@
             <item
                 android:id="@+id/subitem2"
                 android:title="mijn Kappr" />
-            <item
-                android:id="@+id/subitem3"
-                android:title="Database test" />
+
 
         </menu>
 

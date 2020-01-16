@@ -75,7 +75,7 @@ public class info extends Fragment  {
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_info, container, false);
 
-        TextView algemene_info = (TextView) root.findViewById(R.id.Algemene_informatie);
+        TextView algemene_info = (TextView) root.findViewById(R.id.algemene_info);
 
         algemene_info(algemene_info);
 
@@ -84,7 +84,7 @@ public class info extends Fragment  {
         pageViewModel.getText().observe(this, new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
-                textView.setText(s);
+
             }
         });
 

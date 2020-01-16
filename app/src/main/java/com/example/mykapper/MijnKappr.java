@@ -17,7 +17,6 @@ import androidx.core.app.ActivityCompat;
 import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.tabs.TabLayout;
-import static com.example.mykapper.MainActivity.Newpage;
 
 
 public class MijnKappr extends AppCompatActivity {
@@ -76,10 +75,7 @@ public class MijnKappr extends AppCompatActivity {
                 Intent Mijn_Kappr_login = new Intent(this, Mijn_Kappr_login.class);
                 Open_activity(Mijn_Kappr_login);
                 break;
-            case R.id.subitem3:
-                Intent database_test = new Intent(this, database_test.class);
-                Open_activity(database_test);
-                break;
+
         }
         return super.onOptionsItemSelected(item);
     }
