@@ -30,7 +30,6 @@ import java.util.Calendar;
 import java.util.List;
 
 import static com.example.mykapper.MyListAdapter.inflater;
-import static com.example.mykapper.MyListAdapter.rowView;
 
 
 public class reserveren extends Fragment implements View.OnClickListener {

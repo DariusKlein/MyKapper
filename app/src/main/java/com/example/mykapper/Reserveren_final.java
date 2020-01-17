@@ -6,12 +6,18 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.text.Layout;
+import android.util.Patterns;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import androidx.appcompat.widget.Toolbar;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -21,6 +27,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 
+import java.lang.ref.Reference;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
@@ -32,8 +39,10 @@ import static com.example.mykapper.reserveren.Tijd_Afspraak;
 
 public class Reserveren_final extends AppCompatActivity implements View.OnClickListener {
 
+
     String NaamSTR;
     String EmailSTR;
+    String Email_local;
 
     private Button Reserveren;
     private TextView databeseout;
@@ -48,6 +57,16 @@ public class Reserveren_final extends AppCompatActivity implements View.OnClickL
     public TextView Bevestigen;
     public TextView Datum;
     public TextView Tijd;
+    public Switch Kind;
+    public Switch lang_haar;
+    public Switch kort_haar;
+
+    public Switch haar_lengte;
+
+    public ConstraintLayout.LayoutParams params;
+    public ConstraintLayout.LayoutParams params2;
+    public ConstraintLayout.LayoutParams params3;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +74,11 @@ public class Reserveren_final extends AppCompatActivity implements View.OnClickL
         setContentView(R.layout.reserveren_final);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        params = (ConstraintLayout.LayoutParams)kort_haar.getLayoutParams();
+        params2 = (ConstraintLayout.LayoutParams)lang_haar.getLayoutParams();
+        params3 = (ConstraintLayout.LayoutParams)Kind.getLayoutParams();
+
 
         Naam = findViewById(R.id.Naam);
         Email = findViewById(R.id.Email);
@@ -79,6 +103,16 @@ public class Reserveren_final extends AppCompatActivity implements View.OnClickL
         Wijzigen = findViewById(R.id.Wijzigen);
         Bevestigen = findViewById(R.id.Bevestigen);
 
+        Kind = findViewById(R.id.Kind);
+        kort_haar = findViewById(R.id.kort_haar);
+        lang_haar = findViewById(R.id.lang_haar);
+        haar_lengte =  findViewById(R.id.kort_haar);
+
+        Kind.setOnClickListener(this);
+        kort_haar.setOnClickListener(this);
+        lang_haar.setOnClickListener(this);
+
+
         Wijzigen.setOnClickListener(this);
         Bevestigen.setOnClickListener(this);
     }
@@ -87,20 +121,64 @@ public class Reserveren_final extends AppCompatActivity implements View.OnClickL
     public void onClick(View v) {
 
         switch (v.getId()) {
+            case R.id.Kind:
+
+                if (Kind.isChecked()) {
+                    params.topMargin = 20;
+                }else{
+                    params.topMargin = 20;
+                }
+                Kind.setLayoutParams(params);
+
+                haar_lengte = Kind;
+                Visibility(kort_haar);
+                Visibility(lang_haar);
+
+                break;
+            case R.id.kort_haar:
+
+                if (kort_haar.isChecked()) {
+                    params.topMargin = 20;
+                }else{
+                    params.topMargin = 60;
+                }
+                kort_haar.setLayoutParams(params);
+
+                haar_lengte = kort_haar;
+                Visibility(lang_haar);
+                Visibility(Kind);
+
+                break;
+            case R.id.lang_haar:
+
+                if (lang_haar.isChecked()) {
+                    params.topMargin = 20;
+                }else{
+                    params.topMargin = 100;
+                }
+                lang_haar.setLayoutParams(params);
+
+                haar_lengte = lang_haar;
+                Visibility(kort_haar);
+                Visibility(Kind);
+
+                break;
             case R.id.Wijzigen:
 
                 databeseout.setText("");
-                databeseout.setVisibility(View.GONE);
-                Naam.setVisibility(View.VISIBLE);
-                Email.setVisibility(View.VISIBLE);
-                Reserveren.setVisibility(View.VISIBLE);
-                Naam_text.setVisibility(View.VISIBLE);
-                Email_text.setVisibility(View.VISIBLE);
-                Kapper.setVisibility(View.VISIBLE);
-                Wijzigen.setVisibility(View.GONE);
-                Bevestigen.setVisibility(View.GONE);
-                Datum.setVisibility(View.VISIBLE);
-                Tijd.setVisibility(View.VISIBLE);
+                Visibility(databeseout);
+                Visibility(Naam);
+                Visibility(Email);
+                Visibility(Reserveren);
+                Visibility(Naam_text);
+                Visibility(Email_text);
+                Visibility(Kapper);
+                Visibility(Wijzigen);
+                Visibility(Bevestigen);
+                Visibility(Datum);
+                Visibility(Tijd);
+                Visibility(haar_lengte);
+
 
 
                 break;
@@ -109,66 +187,92 @@ public class Reserveren_final extends AppCompatActivity implements View.OnClickL
                 Open_activity(Main);
                 break;
             case R.id.Reserveren:
-                FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+                Email_local = (String.valueOf(Email.getText()));
+
+                if (Naam.length() < 4) {
+                    Naam.setError("Naam is te kort");
+                }else if (Email.getText() == null){
+                    Email.setError("Email niet ingevuld");
+                }else if (!Patterns.EMAIL_ADDRESS.matcher(Email_local).matches()){
+                    Email.setError("e-mailadres niet geldig");
+                }else if (haar_lengte.isChecked() == false){
+                    haar_lengte.setError("Kies een haarlengte");
+                }else {
+
+                    FirebaseFirestore db = FirebaseFirestore.getInstance();
 
 
-                NaamSTR = String.valueOf(Naam.getText());
-                EmailSTR = String.valueOf(Email.getText());
+                    NaamSTR = String.valueOf(Naam.getText());
+                    EmailSTR = String.valueOf(Email.getText());
+                    String HaarLengte = String.valueOf(haar_lengte.getText());
 
 
-                Map<String, Object> Afspraak = new HashMap<>();
-                Afspraak.put("Name", NaamSTR);
-                Afspraak.put("Email", EmailSTR);
-                Afspraak.put("Datum", Afspraak_datum);
-                Afspraak.put("Tijd", Tijd_Afspraak);
-                Afspraak.put("Kapper", Gekozen_kapper);
+                    Map<String, Object> Afspraak = new HashMap<>();
+                    Afspraak.put("Name", NaamSTR);
+                    Afspraak.put("Email", EmailSTR);
+                    Afspraak.put("Datum", Afspraak_datum);
+                    Afspraak.put("Tijd", Tijd_Afspraak);
+                    Afspraak.put("Kapper", Gekozen_kapper);
+                    Afspraak.put("Haar lengte", HaarLengte);
 
 
-                final String MyNextDocID = (EmailSTR + (Calendar.getInstance().get(Calendar.HOUR_OF_DAY)) + ":" + (Calendar.getInstance().get(Calendar.MINUTE)));
+                    final String MyNextDocID = (EmailSTR + (Calendar.getInstance().get(Calendar.HOUR_OF_DAY)) + ":" + (Calendar.getInstance().get(Calendar.MINUTE)));
 
-                DocumentReference docRef = db.collection("Afspraken").document(MyNextDocID);
-                docRef.set(Afspraak);
-                DocumentReference docRef3 = db.collection("Kapsalons").document(Gekozen_kapper).collection("Afspraken").document(MyNextDocID);
-                docRef3.set(Afspraak);
+                    DocumentReference docRef = db.collection("Afspraken").document(MyNextDocID);
+                    docRef.set(Afspraak);
+                    DocumentReference docRef3 = db.collection("Kapsalons").document(Gekozen_kapper).collection("Afspraken").document(MyNextDocID);
+                    docRef3.set(Afspraak);
 
-                DocumentReference docRef2 = db.collection("Afspraken").document(MyNextDocID);
-                docRef2.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                        if (task.isSuccessful()) {
-                            DocumentSnapshot doc = task.getResult();
+                    DocumentReference docRef2 = db.collection("Afspraken").document(MyNextDocID);
+                    docRef2.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                            if (task.isSuccessful()) {
+                                DocumentSnapshot doc = task.getResult();
 
-                            StringBuilder fields = new StringBuilder("");
+                                StringBuilder fields = new StringBuilder("");
 
-                            fields.append("Name: ").append(doc.get("Name"));
-                            fields.append("\nEmail: ").append(doc.get("Email"));
-                            fields.append("\nDatum: ").append(doc.get("Datum"));
-                            fields.append("\nTijd: ").append(doc.get("Tijd"));
-                            fields.append("\nKapper: ").append(doc.get("Kapper"));
+                                fields.append("Name: ").append(doc.get("Name"));
+                                fields.append("\nEmail: ").append(doc.get("Email"));
+                                fields.append("\nDatum: ").append(doc.get("Datum"));
+                                fields.append("\nTijd: ").append(doc.get("Tijd"));
+                                fields.append("\nKapper: ").append(doc.get("Kapper"));
+                                fields.append("\nHaar lengte: ").append(doc.get("Haar lengte"));
 
-                            databeseout.setText(fields.toString());
-                            databeseout.setVisibility(View.VISIBLE);
-                            Naam.setVisibility(View.GONE);
-                            Email.setVisibility(View.GONE);
-                            Reserveren.setVisibility(View.GONE);
-                            Naam_text.setVisibility(View.GONE);
-                            Email_text.setVisibility(View.GONE);
-                            Kapper.setVisibility(View.GONE);
-                            Wijzigen.setVisibility(View.VISIBLE);
-                            Bevestigen.setVisibility(View.VISIBLE);
-                            Datum.setVisibility(View.GONE);
-                            Tijd.setVisibility(View.GONE);
+                                databeseout.setText(fields.toString());
+                                Visibility(databeseout);
+                                Visibility(Naam);
+                                Visibility(Email);
+                                Visibility(Reserveren);
+                                Visibility(Naam_text);
+                                Visibility(Email_text);
+                                Visibility(Kapper);
+                                Visibility(Wijzigen);
+                                Visibility(Bevestigen);
+                                Visibility(Datum);
+                                Visibility(Tijd);
+                                Visibility(haar_lengte);
 
 
+                            }
                         }
-                    }
 
-                });
+                    });
+                }
                 break;
 
 
         }
 
+    }
+    public void Visibility(View v){
+
+        if (v.getVisibility() == View.VISIBLE) {
+            v.setVisibility(View.GONE);
+        }else{
+            v.setVisibility(View.VISIBLE);
+        }
     }
     public void Open_activity(Intent intent) {
         this.startActivity(intent);
