@@ -75,11 +75,6 @@ public class Reserveren_final extends AppCompatActivity implements View.OnClickL
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        params = (ConstraintLayout.LayoutParams)kort_haar.getLayoutParams();
-        params2 = (ConstraintLayout.LayoutParams)lang_haar.getLayoutParams();
-        params3 = (ConstraintLayout.LayoutParams)Kind.getLayoutParams();
-
-
         Naam = findViewById(R.id.Naam);
         Email = findViewById(R.id.Email);
 
@@ -108,6 +103,10 @@ public class Reserveren_final extends AppCompatActivity implements View.OnClickL
         lang_haar = findViewById(R.id.lang_haar);
         haar_lengte =  findViewById(R.id.kort_haar);
 
+        params = (ConstraintLayout.LayoutParams)kort_haar.getLayoutParams();
+        params2 = (ConstraintLayout.LayoutParams)lang_haar.getLayoutParams();
+        params3 = (ConstraintLayout.LayoutParams)Kind.getLayoutParams();
+
         Kind.setOnClickListener(this);
         kort_haar.setOnClickListener(this);
         lang_haar.setOnClickListener(this);
@@ -116,6 +115,24 @@ public class Reserveren_final extends AppCompatActivity implements View.OnClickL
         Wijzigen.setOnClickListener(this);
         Bevestigen.setOnClickListener(this);
     }
+    public void moveswitches() {
+
+        if (Kind.isChecked()) {
+            params.topMargin = 53;
+        } else if (kort_haar.isChecked()) {
+            params2.topMargin = 53;
+        } else if (lang_haar.isChecked()) {
+            params3.topMargin = 53;
+        } else {
+            params.topMargin = 53;
+            params2.topMargin = 159;
+            params3.topMargin = 265;
+        }
+
+        Kind.setLayoutParams(params);
+        kort_haar.setLayoutParams(params2);
+        lang_haar.setLayoutParams(params3);
+    }
 
     @Override
     public void onClick(View v) {
@@ -123,12 +140,7 @@ public class Reserveren_final extends AppCompatActivity implements View.OnClickL
         switch (v.getId()) {
             case R.id.Kind:
 
-                if (Kind.isChecked()) {
-                    params.topMargin = 20;
-                }else{
-                    params.topMargin = 20;
-                }
-                Kind.setLayoutParams(params);
+                moveswitches();
 
                 haar_lengte = Kind;
                 Visibility(kort_haar);
@@ -137,12 +149,7 @@ public class Reserveren_final extends AppCompatActivity implements View.OnClickL
                 break;
             case R.id.kort_haar:
 
-                if (kort_haar.isChecked()) {
-                    params.topMargin = 20;
-                }else{
-                    params.topMargin = 60;
-                }
-                kort_haar.setLayoutParams(params);
+                moveswitches();
 
                 haar_lengte = kort_haar;
                 Visibility(lang_haar);
@@ -151,12 +158,7 @@ public class Reserveren_final extends AppCompatActivity implements View.OnClickL
                 break;
             case R.id.lang_haar:
 
-                if (lang_haar.isChecked()) {
-                    params.topMargin = 20;
-                }else{
-                    params.topMargin = 100;
-                }
-                lang_haar.setLayoutParams(params);
+                moveswitches();
 
                 haar_lengte = lang_haar;
                 Visibility(kort_haar);
