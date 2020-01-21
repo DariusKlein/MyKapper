@@ -43,6 +43,7 @@ class MyListAdapter extends ArrayAdapter<String> {
 
 
 
+
         this.context=context;
         this.maintitle=maintitle;
         this.subtitle=subtitle;
