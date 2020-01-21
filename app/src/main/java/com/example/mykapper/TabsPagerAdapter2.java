@@ -12,7 +12,7 @@ public class TabsPagerAdapter2 extends FragmentPagerAdapter {
 
     @StringRes
     private static final int[] TAB_TITLES =
-            new int[] { R.string.tab_text_4, R.string.tab_text_5, R.string.tab_text_6 };
+            new int[] { R.string.tab_text_4, R.string.tab_text_5 };
     private final Context mContext;
 
     public TabsPagerAdapter2(Context context, FragmentManager fm) {
@@ -27,8 +27,6 @@ public class TabsPagerAdapter2 extends FragmentPagerAdapter {
                 return info.newInstance();
             case 1:
                 return reserveren.newInstance();
-            case 2:
-                return info.newInstance();
             default:
                 return null;
         }
@@ -43,6 +41,6 @@ public class TabsPagerAdapter2 extends FragmentPagerAdapter {
     @Override
     public int getCount() {
         // Show 3 total pages.
-        return 3;
+        return 2;
     }
 }

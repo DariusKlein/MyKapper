@@ -4,7 +4,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
@@ -32,20 +31,12 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 
-import org.w3c.dom.Document;
-
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
 import java.util.TreeMap;
 
 import static com.example.mykapper.MainActivity.Rating;
-import static com.example.mykapper.MainActivity.Newpage;
 import static com.example.mykapper.MainActivity.imagesList;
+import static com.example.mykapper.MyListAdapter.Title;
 import static com.example.mykapper.MyListAdapter.rowView;
 
 
@@ -67,6 +58,8 @@ public class Second_activity extends AppCompatActivity {
     private FusedLocationProviderClient fusedLocationClient;
     private StorageReference mStorageRef;
 
+    static int documentcount = 0;
+
     static final ArrayList<String> maintitle = new ArrayList<String>();
     final ArrayList<String> subtitle = new ArrayList<String>();
     final ArrayList<Integer> imgid = new ArrayList<Integer>();
@@ -76,6 +69,7 @@ public class Second_activity extends AppCompatActivity {
     static int KapperID;
     float i = 0;
     static boolean GPS = false;
+    static String Gekozen_kapper;
 
     static MyListAdapter adapter;
 
@@ -120,7 +114,7 @@ public class Second_activity extends AppCompatActivity {
                     if (position == i) {
 
                         KapperID = i;
-
+                        Gekozen_kapper = Title.get(i);
                         Intent Kapsalon_algemeen = new Intent(getBaseContext(), Kapsalon_algemeen.class);
                         Open_activity(Kapsalon_algemeen);
                     }
@@ -155,10 +149,7 @@ public class Second_activity extends AppCompatActivity {
                 Intent Mijn_Kappr_login = new Intent(this, Mijn_Kappr_login.class);
                 Open_activity(Mijn_Kappr_login);
                 break;
-            case R.id.subitem3:
-                Intent database_test = new Intent(this, database_test.class);
-                Open_activity(database_test);
-                break;
+
         }
         return super.onOptionsItemSelected(item);
     }
@@ -199,7 +190,7 @@ public class Second_activity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             //loading.setText("");
 
-                            int documentcount = 0;
+                            documentcount = 0;
                             ListListList.clear();
                             DocIDandPIC.clear();
 
@@ -250,6 +241,7 @@ public class Second_activity extends AppCompatActivity {
                             i = 0;
                             Setuplist();
                         }
+
 
 
                     }

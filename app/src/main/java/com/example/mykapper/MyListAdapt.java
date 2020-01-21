@@ -86,6 +86,7 @@ class MyListAdapter extends ArrayAdapter<String> {
             }
         }
 
+
         return rowView;
 
     }
