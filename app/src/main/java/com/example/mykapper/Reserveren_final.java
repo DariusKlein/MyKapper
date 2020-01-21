@@ -10,9 +10,12 @@ import android.text.Layout;
 import android.util.Patterns;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
+import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
 
@@ -25,11 +28,15 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 
 import java.lang.ref.Reference;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static com.example.mykapper.Second_activity.Gekozen_kapper;
@@ -43,6 +50,8 @@ public class Reserveren_final extends AppCompatActivity implements View.OnClickL
     String NaamSTR;
     String EmailSTR;
     String Email_local;
+    String Behandeling_STR;
+    String Uitleg_behandeling;
 
     private Button Reserveren;
     private TextView databeseout;
@@ -57,9 +66,14 @@ public class Reserveren_final extends AppCompatActivity implements View.OnClickL
     public TextView Bevestigen;
     public TextView Datum;
     public TextView Tijd;
+    public TextView Behandeling_Text;
     public Switch Kind;
     public Switch lang_haar;
     public Switch kort_haar;
+    private Spinner Behandeling;
+
+    List<String> Behandelingen_list = new ArrayList<String>();
+    List<String> Uitleg_list = new ArrayList<String>();
 
     public Switch haar_lengte;
 
@@ -111,9 +125,13 @@ public class Reserveren_final extends AppCompatActivity implements View.OnClickL
         kort_haar.setOnClickListener(this);
         lang_haar.setOnClickListener(this);
 
+        Behandeling_Text = findViewById(R.id.Behandeling_Text);
 
         Wijzigen.setOnClickListener(this);
         Bevestigen.setOnClickListener(this);
+
+        Behandeling = findViewById(R.id.Behandeling);
+        setspinner();
     }
     public void moveswitches() {
 
@@ -180,6 +198,8 @@ public class Reserveren_final extends AppCompatActivity implements View.OnClickL
                 Visibility(Datum);
                 Visibility(Tijd);
                 Visibility(haar_lengte);
+                Visibility(Behandeling_Text);
+                Visibility(Behandeling);
 
 
 
@@ -217,6 +237,7 @@ public class Reserveren_final extends AppCompatActivity implements View.OnClickL
                     Afspraak.put("Tijd", Tijd_Afspraak);
                     Afspraak.put("Kapper", Gekozen_kapper);
                     Afspraak.put("Haar lengte", HaarLengte);
+                    Afspraak.put("Behandeling",Behandeling_STR);
 
 
                     final String MyNextDocID = (EmailSTR + (Calendar.getInstance().get(Calendar.HOUR_OF_DAY)) + ":" + (Calendar.getInstance().get(Calendar.MINUTE)));
@@ -236,11 +257,12 @@ public class Reserveren_final extends AppCompatActivity implements View.OnClickL
                                 StringBuilder fields = new StringBuilder("");
 
                                 fields.append("Name: ").append(doc.get("Name"));
-                                fields.append("\nEmail: ").append(doc.get("Email"));
+                                fields.append("\n").append(doc.get("Email"));
                                 fields.append("\nDatum: ").append(doc.get("Datum"));
                                 fields.append("\nTijd: ").append(doc.get("Tijd"));
                                 fields.append("\nKapper: ").append(doc.get("Kapper"));
                                 fields.append("\nHaar lengte: ").append(doc.get("Haar lengte"));
+                                fields.append("\nBehandeling: ").append(doc.get("Behandeling"));
 
                                 databeseout.setText(fields.toString());
                                 Visibility(databeseout);
@@ -255,6 +277,8 @@ public class Reserveren_final extends AppCompatActivity implements View.OnClickL
                                 Visibility(Datum);
                                 Visibility(Tijd);
                                 Visibility(haar_lengte);
+                                Visibility(Behandeling_Text);
+                                Visibility(Behandeling);
 
 
                             }
@@ -278,5 +302,52 @@ public class Reserveren_final extends AppCompatActivity implements View.OnClickL
     }
     public void Open_activity(Intent intent) {
         this.startActivity(intent);
+    }
+    public void setspinner(){
+
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+
+        db.collection("Kapsalons").document(Gekozen_kapper).collection("Behandelingen")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+
+                            Behandelingen_list.clear();
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+
+                                String Behandelingen = document.getId();
+                                Behandelingen_list.add(Behandelingen);
+                                Uitleg_list.add(document.getString("Uitleg"));
+
+
+                            }
+                            ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(getBaseContext(), android.R.layout.simple_spinner_item, Behandelingen_list);
+                            dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                            Behandeling.setAdapter(dataAdapter);
+                        }
+
+
+                    }
+
+                });
+
+        Behandeling.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
+
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                Behandeling_STR = parent.getItemAtPosition(position).toString();
+                Uitleg_behandeling = String.valueOf(Uitleg_list.get(position));
+                Behandeling_Text.setText(Uitleg_behandeling);
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
     }
 }

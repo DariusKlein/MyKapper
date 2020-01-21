@@ -58,6 +58,8 @@ public class Second_activity extends AppCompatActivity {
     private FusedLocationProviderClient fusedLocationClient;
     private StorageReference mStorageRef;
 
+    static int documentcount = 0;
+
     static final ArrayList<String> maintitle = new ArrayList<String>();
     final ArrayList<String> subtitle = new ArrayList<String>();
     final ArrayList<Integer> imgid = new ArrayList<Integer>();
@@ -188,7 +190,7 @@ public class Second_activity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             //loading.setText("");
 
-                            int documentcount = 0;
+                            documentcount = 0;
                             ListListList.clear();
                             DocIDandPIC.clear();
 
