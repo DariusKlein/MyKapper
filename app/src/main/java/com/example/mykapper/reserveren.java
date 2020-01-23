@@ -37,6 +37,8 @@ public class reserveren extends Fragment implements View.OnClickListener {
     static String Afspraak_datum;
     private static final String TAG = "reserveren";
 
+    public String selectedDate;
+
     private PageViewModel2 pageViewModel;
     List<String> bechikbare_tijden = new ArrayList<>();
     private Spinner spinner;
@@ -62,7 +64,6 @@ public class reserveren extends Fragment implements View.OnClickListener {
 
 
 
-
     }
 
     @Override
@@ -70,6 +71,7 @@ public class reserveren extends Fragment implements View.OnClickListener {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View root = inflater.inflate(R.layout.fragment_reserveren, container, false);
+
         final TextView textView = root.findViewById(R.id.section_label);
         pageViewModel.getText().observe(this, new Observer<String>() {
             @Override
@@ -83,6 +85,14 @@ public class reserveren extends Fragment implements View.OnClickListener {
         calendar1 = root.findViewById(R.id.calendarView);
 
         setSpinner(root);
+
+        calendar1.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
+            @Override
+            public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
+                String Date = dayOfMonth + "-" + (month + 1) + "-" + year;
+                selectedDate = Date;
+            }
+        });
 
 
 
@@ -124,11 +134,10 @@ public class reserveren extends Fragment implements View.OnClickListener {
                 break;
             case R.id.load_kappers:
 
-                CalendarView simpleCalendarView = (CalendarView) getView().findViewById(R.id.calendarView);
-                long selectedDate = simpleCalendarView.getDate();
-                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
-                String dateString = simpleDateFormat.format(selectedDate);
-                Afspraak_datum = (String.format(dateString));
+
+                //SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+                //String dateString = simpleDateFormat.format(selectedDate);
+                Afspraak_datum = (String.format(selectedDate));
 
                 FirebaseFirestore db = FirebaseFirestore.getInstance();
 
