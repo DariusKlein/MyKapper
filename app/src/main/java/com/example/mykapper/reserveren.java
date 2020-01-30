@@ -28,8 +28,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-
-import static com.example.mykapper.MyListAdapter.inflater;
+import java.util.Locale;
 
 
 public class reserveren extends Fragment implements View.OnClickListener {
@@ -134,10 +133,12 @@ public class reserveren extends Fragment implements View.OnClickListener {
                 break;
             case R.id.load_kappers:
 
+                if (selectedDate == null){
 
-                //SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
-                //String dateString = simpleDateFormat.format(selectedDate);
-                Afspraak_datum = (String.format(selectedDate));
+                    selectedDate = "Today";
+                }
+
+                Afspraak_datum = selectedDate;
 
                 FirebaseFirestore db = FirebaseFirestore.getInstance();
 
